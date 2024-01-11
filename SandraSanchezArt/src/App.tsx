@@ -14,10 +14,24 @@ import Authentication from './routes/Authentication/authentication-component';
 // import ART_DATA from './SandraSanchez-art-data';
 // import { addCollectionAndDocuments } from './utilities/firebase-utilities';
 
+import { getCategoriesAndDocuments } from './utilities/firebase-utilities';
+
 const App: FC = () => {
   // useEffect(() => {
   //   addCollectionAndDocuments('categories', ART_DATA);
   // }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const categoriesMap = await getCategoriesAndDocuments();
+        console.log(categoriesMap);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getData();
+  },[])
 
   return (
     <Routes>

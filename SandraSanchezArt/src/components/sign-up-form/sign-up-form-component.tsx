@@ -1,4 +1,6 @@
-import {useState, ChangeEvent, FormEvent} from 'react';
+import {useState, useContext, ChangeEvent, FormEvent} from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { SignUpFormContainer, ButtonContainer, ColorSpan } from "./sign-up-form.styles";
 import FormInput from "../form-inputs/form-input-component";
 
@@ -7,7 +9,10 @@ import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
 
 import { createAuthUserWithEmailAndPassword, createUserDocOrSignInUserFromAuth } from '../../utilities/firebase-utilities';
 
+import { UserContext } from '../../contexts/user-context';
+
 const SignUpForm = () => {
+    const navigate = useNavigate();
     const [formInputs, setFormInputs] = useState({
         displayName: '',
         email: '',
@@ -16,6 +21,8 @@ const SignUpForm = () => {
     });
 
     const {displayName, email, password, confirmPassword} = formInputs;
+
+    const {currentUser, setCurrentUser} = useContext(UserContext);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -42,13 +49,16 @@ const SignUpForm = () => {
             if(response){
                 const {user} = response;
                 await createUserDocOrSignInUserFromAuth(user, {displayName});
+                setCurrentUser(user);
             }
         } catch(error){
             console.log(error);
         }
 
         clearInputs();
-    }
+    };
+
+    {currentUser && navigate('/') }
     return (
         <SignUpFormContainer>
             <h2>Sign Up!</h2>

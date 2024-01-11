@@ -14,11 +14,15 @@ export type CategoryItem = {
   imageUrl: string;
   description: string;
   sizesAndPrices: {size: string; price: number}[]
-};
+} & {id: string; name: string; imageUrl: string; price: number; description: string}
 
 export type CategoryObject = {
   categoryName: string;
   items: CategoryItem[]
+};
+
+export type CategoryMap = {
+  [categoryName: string]: CategoryItem[];
 };
 
 // Your web app's Firebase configuration
@@ -49,6 +53,8 @@ googleProvider.setCustomParameters({
 export const auth = getAuth(app);
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 
+
+// https://firebase.google.com/docs/firestore/manage-data/add-data
 export const addCollectionAndDocuments = async (collectionName: string, productObjectsToAdd: CategoryObject[]): Promise<void> => {
   const batch = writeBatch(db);
   const collectionRef = collection(db, collectionName);
@@ -72,6 +78,9 @@ export const addCollectionAndDocuments = async (collectionName: string, productO
 }
 // addCollectionsAndDocuments('categories', SHOP_DATA)
 
+
+// https://firebase.google.com/docs/firestore/query-data/get-data
+// https://firebase.google.com/docs/firestore/manage-data/add-data
 export const createUserDocOrSignInUserFromAuth = async (authObj: User, additionalName = {}) => {
   const userCollectionRef = collection(db, 'users'); //reference to collection named 'users' inside firestore db
   const userDocRef = doc(userCollectionRef, authObj.uid); // create reference to document instance inside user collection with authObj's uid (will create it if it doesnt exist )
@@ -97,6 +106,30 @@ export const createUserDocOrSignInUserFromAuth = async (authObj: User, additiona
   console.log(userSnapshot.data());
   return userDocRef;
 
+};
+
+//https://firebase.google.com/docs/firestore/query-data/queries
+export const getCategoriesAndDocuments = async () => {
+  const categoriesCollectionRef = collection(db, 'categories');
+  const q = query(categoriesCollectionRef);
+
+  const querySnapshot = await getDocs(q);
+  // console.log(querySnapshot);
+  // console.log(querySnapshot.docs);
+
+  const categoriesMap = querySnapshot.docs.reduce((accumulator, docSnapshot) => {
+    const {categoryName, items} = docSnapshot.data();
+    accumulator[categoryName] = items;
+    return accumulator;
+  }, {} as CategoryMap);
+
+  return categoriesMap;
+
+  // querySnapshot.forEach((document) => {
+  //   // console.log(document);
+  //   console.log(document.data());
+  //   return document.data();
+  // });
 };
 
 export const signInAuthUserWithEmailAndPassword = async (email: string, password: string) => {
