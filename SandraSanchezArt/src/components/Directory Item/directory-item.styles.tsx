@@ -19,14 +19,14 @@ export const BodyContainer = styled.div`
     justify-content: center;
     opacity: 0.7;
     position: absolute;
-    top: 480px;
+    top: 500px;
     
 
     h2 {
         text-transform: uppercase;
         font-weight: bold;
         color: #fff;
-        text-decoration: underline;
+        // text-decoration: underline;
     }
 
     p {
