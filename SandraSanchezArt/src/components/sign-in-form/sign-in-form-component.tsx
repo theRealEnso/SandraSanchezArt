@@ -60,6 +60,7 @@ const SignInForm = () => {
             if(response){
                 const {user} = response;
                 await createUserDocOrSignInUserFromAuth(user);
+                setCurrentUser(user);
             }
         } catch (error) {
             console.log(error);

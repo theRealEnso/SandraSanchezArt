@@ -1,6 +1,6 @@
 // import './App.css';
 
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Navigation from './routes/Navigation/navigation-component';
@@ -14,24 +14,24 @@ import Authentication from './routes/Authentication/authentication-component';
 // import ART_DATA from './SandraSanchez-art-data';
 // import { addCollectionAndDocuments } from './utilities/firebase-utilities';
 
-import { getCategoriesAndDocuments } from './utilities/firebase-utilities';
-
 const App: FC = () => {
+
+  //for adding data to firestore
   // useEffect(() => {
   //   addCollectionAndDocuments('categories', ART_DATA);
   // }, []);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const categoriesMap = await getCategoriesAndDocuments();
-        console.log(categoriesMap);
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getData();
-  },[])
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const categoriesMap = await getCategoriesAndDocuments();
+  //       console.log(categoriesMap);
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   getData();
+  // },[])
 
   return (
     <Routes>

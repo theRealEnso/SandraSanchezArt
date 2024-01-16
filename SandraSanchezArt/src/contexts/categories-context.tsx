@@ -2,8 +2,8 @@ import { createContext, useState, useEffect, FC, ReactNode } from "react";
 import { CategoryMap, getCategoriesAndDocuments } from "../utilities/firebase-utilities";
 
 type CategoriesContextProps = {
-    categoriesMap: CategoryMap | void;
-    setCategoriesMap: React.Dispatch<React.SetStateAction<CategoryMap | void>>
+    categoriesMap: CategoryMap;
+    setCategoriesMap: React.Dispatch<React.SetStateAction<CategoryMap>>
 }
 
 type CategoriesProviderProps = {
@@ -11,12 +11,12 @@ type CategoriesProviderProps = {
 };
 
 export const CategoriesContext = createContext<CategoriesContextProps>({
-    categoriesMap: {},
+    categoriesMap: {} as CategoryMap,
     setCategoriesMap: () => {},
 });
 
 export const CategoriesProvider: FC<CategoriesProviderProps> = ({children}) => {
-    const [categoriesMap, setCategoriesMap] = useState<CategoryMap | void>({});
+    const [categoriesMap, setCategoriesMap] = useState<CategoryMap>({});
     const value = {categoriesMap, setCategoriesMap};
 
     useEffect(() => {

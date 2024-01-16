@@ -1,3 +1,12 @@
+// const appCheckKey = import.meta.env.APP_CHECK_KEY;
+
+//FLICKR
+// Key:
+// 1d62798f1600fee2922a9c51f61d4087
+
+// Secret:
+// 27346ce7a519c4bc
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
@@ -8,12 +17,15 @@ import {getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, create
 
 import {getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs, QueryDocumentSnapshot} from 'firebase/firestore'; // doc gets document instance, getDoc gets data inside a document instance. Likewise, setDoc function only sets the data inside a document. The doc function is what allows us to get the entire document instance (super confusing naming convention!)
 
+// import {initializeAppCheck, AppCheck, ReCaptchaV3Provider} from "firebase/app-check";
+
+
 export type CategoryItem = {
   id: string;
   name: string;
   imageUrl: string;
   description: string;
-  sizesAndPrices: {size: string; price: number}[]
+  sizesAndPrices: {size: string; price: number}[];
 } & {id: string; name: string; imageUrl: string; price: number; description: string}
 
 export type CategoryObject = {
@@ -34,8 +46,19 @@ const firebaseConfig = {
   storageBucket: "sandra-sanchez-art.appspot.com",
   messagingSenderId: "490365144817",
   appId: "1:490365144817:web:f1cfc1439ab5f515d4e350",
-  measurementId: "G-FVK28QXSKK"
+  measurementId: "G-FVK28QXSKK",
 };
+
+// const appCheckConfig = {
+//   "token": {
+//     "site_key": appCheckKey
+//   }
+// }
+
+// const appCheck = initializeAppCheck(app, {
+//   provider: new ReCaptchaV3Provider(appCheckKey),
+//   isTokenAutoRefreshEnabled: true,
+// });
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -43,6 +66,9 @@ const app = initializeApp(firebaseConfig);
 
 //https://firebase.google.com/docs/firestore/quickstart
 export const db = getFirestore(app);
+
+
+
 
 // https://firebase.google.com/docs/auth/web/google-signin
 const googleProvider = new GoogleAuthProvider();
