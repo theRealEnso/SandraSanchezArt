@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 const StyledDiscordIcon = styled(FontAwesomeIcon)`
-    color: #fff;
+    color: rgb(115, 115, 115);
     margin-right: 15px;
 
     &:hover {
@@ -17,7 +17,7 @@ const StyledDiscordIcon = styled(FontAwesomeIcon)`
 `
 
 const StyledYoutubeIcon = styled(FontAwesomeIcon)`
-    color: #fff;
+    color: rgb(115, 115, 115);
     margin-right: 15px;
 
     &:hover {
@@ -61,8 +61,13 @@ export const SocialMediaContainer = styled.div`
 export const NavigationLink = styled(Link)`
     text-decoration: none;
     font-weight: bold;
-    color: #fff;
+    color: rgb(115, 115, 115);
     padding: 10px 0 10px 0;
+    transition: 0.6s ease;
+
+    &:hover {
+        color: #fff;
+    }
 
 `
 export const LogoContainer = styled.div`
@@ -70,19 +75,20 @@ export const LogoContainer = styled.div`
 `
 
 export const InstagramLogo = styled(InstagramIcon)`
+    color: rgb(115, 115, 115);
     border-radius: 10px;
     margin-right: 15px;
 
     &:hover {
         background: #d6249f;
-        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+        background: radial-gradient(circle at 0% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
         box-shadow: 0px 3px 10px rgba(0,0,0,.25);
         transition: 1s ease-out;
     }
 `
 
 export const FacebookLogo = styled(FacebookIcon)`
-    color: #fff;
+    color: rgb(115, 115, 115);
     margin-right: 15px;
 
     &:hover {

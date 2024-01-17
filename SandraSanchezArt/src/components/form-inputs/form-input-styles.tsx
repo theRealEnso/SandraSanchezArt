@@ -24,7 +24,11 @@ export const Label = styled.label<LabelProps>`
   transition: 700ms ease all;
 
   //if shrink is truthy, then apply the shrinkLabelStyles
+  //destructuring shrink directly off of props
   ${({ shrink }) => shrink && shrinkLabelStyles};
+
+  //alternative, does the same thing
+  // ${(props) => props.shrink && shrinkLabelStyles};
 `;
 
 export const Input = styled.input`

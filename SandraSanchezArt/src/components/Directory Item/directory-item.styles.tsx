@@ -11,6 +11,7 @@ export const BackgroundImage = styled.div<ImageProps>`
     background-position: center;
     background-image: ${({imageURL}) => `url(${imageURL})`};
     border-radius: 10px;
+    opacity: 0.9;
 `
 export const BodyContainer = styled.div`
     display: flex;
@@ -41,18 +42,19 @@ export const DirectoryItemContainer = styled.div`
     justify-content: center;
     width: 100%;
     height: 500px;
-    // padding: 20px;
     border-radius: 10px;
-    border: 1px solid black;
-    margin: 5px 10px 10px 5px;
+    margin: 30px 15px;
     overflow: hidden;
+    box-shadow: 5px 20px 50px rgba(0, 0, 0, 1);
+    // z-index: -1;
 
     &:hover {
         cursor: pointer;
 
         ${BackgroundImage} {
+            opacity: 1;
             transform: scale(1.1);
-            transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+            transition: transform 3s cubic-bezier(0.25, 0.45, 0.45, 0.95);
         }
 
         ${BodyContainer} {
