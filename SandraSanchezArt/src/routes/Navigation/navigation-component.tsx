@@ -13,8 +13,12 @@ const Navigation: FC = () => {
     const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
 
     const toggleMentoringDropDown = () => setIsMentoringDropdownOpen(!isMentoringDropdownOpen);
-    const toggleShopDropdown = () => setIsShopDropdownOpen(!isShopDropdownOpen);
+    const onMentoringMouseEnter = () => setIsMentoringDropdownOpen(true);
+    const onMentoringMouseLeave = () => setIsMentoringDropdownOpen(false);
 
+    const toggleShopDropdown = () => setIsShopDropdownOpen(!isShopDropdownOpen);
+    const onShopMouseEnter = () => setIsShopDropdownOpen(true);
+    const onShopMouseLeave = () => setIsShopDropdownOpen(false);
 
 
     useEffect(() => {
@@ -55,22 +59,22 @@ const Navigation: FC = () => {
 
                 <NavbarContainer>
                     <NavList>
-                        <NavItem><NavLink to='/about'>About Me</NavLink></NavItem>
+                        <NavItem><NavLink to='/about'>About</NavLink></NavItem>
 
                         <NavItem>
-                            <DropdownToggle id="mentoring" onClick={toggleMentoringDropDown}>Mentoring</DropdownToggle>
-                            <Dropdown open={isMentoringDropdownOpen}>
+                            <DropdownToggle id="mentoring" onClick={toggleMentoringDropDown} onMouseEnter={onMentoringMouseEnter} onMouseLeave={onMentoringMouseLeave}>Mentoring</DropdownToggle>
+                            <Dropdown open={isMentoringDropdownOpen} onMouseEnter={onMentoringMouseEnter} onMouseLeave={onMentoringMouseLeave}>
                                 <DropdownLink to="">Private Lessons</DropdownLink>
                                 <DropdownLink to="">Group Classes</DropdownLink>
                             </Dropdown>
                         </NavItem>
 
                         <NavItem>
-                            <DropdownToggle id="shop" onClick={toggleShopDropdown}>Shop</DropdownToggle>
-                            <Dropdown open={isShopDropdownOpen}>
-                                <DropdownLink to="">Inks</DropdownLink>
-                                <DropdownLink to="">Illustrations</DropdownLink>
-                                <DropdownLink to="">Fine Art</DropdownLink>
+                            <DropdownToggle id="shop" onClick={toggleShopDropdown} onMouseEnter={onShopMouseEnter} onMouseLeave={onShopMouseLeave}>Shop</DropdownToggle>
+                            <Dropdown open={isShopDropdownOpen} onMouseEnter={onShopMouseEnter} onMouseLeave={onShopMouseLeave}>
+                                <DropdownLink to="shop/inks">Inks</DropdownLink>
+                                <DropdownLink to="shop/illustrations">Illustrations</DropdownLink>
+                                <DropdownLink to="shop/fine-art">Fine Art</DropdownLink>
                             </Dropdown>
                         </NavItem>
                         {currentUser ? <NavItem><NavLink to='/' onClick={signOutAuthUser}>Sign Out</NavLink></NavItem> : <NavItem><NavLink to='/authentication'>Sign In</NavLink></NavItem> }

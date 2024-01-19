@@ -67,6 +67,17 @@ export const NavLink = styled(Link)`
         color: ${hoverColor}
     }
 `
+export const Dropdown = styled.div<DropdownProps>`
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 140px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    margin: 50px 0;
+
+    ${(props) => props.open && 'display: block;'};
+`
 
 export const DropdownToggle = styled.div`
     cursor: pointer;
@@ -82,22 +93,14 @@ export const DropdownToggle = styled.div`
     transition: 0.5s ease;
 
     &:hover {
-    color: ${hoverColor};
+        color: ${hoverColor};
+
+        ${Dropdown} {
+            display: inline-block;
+        }
+
     }
 `;
-
-export const Dropdown = styled.div<DropdownProps>`
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 140px;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    margin: 50px 0;
-    overflow: visible;
-
-    ${(props) => props.open && 'display: block;'};
-`
 
 export const DropdownLink = styled(Link)`
   color: black;

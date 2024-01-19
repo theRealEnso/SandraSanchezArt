@@ -19,18 +19,5 @@ export const CategoriesProvider: FC<CategoriesProviderProps> = ({children}) => {
     const [categoriesMap, setCategoriesMap] = useState<CategoryMap>({});
     const value = {categoriesMap, setCategoriesMap};
 
-    useEffect(() => {
-        const getData = async () => {
-          try {
-            const categoriesMap = await getCategoriesAndDocuments();
-            console.log(categoriesMap);
-            setCategoriesMap(categoriesMap);
-          } catch (error) {
-            console.log(error)
-          }
-        }
-        getData();
-      },[])
-
     return <CategoriesContext.Provider value={value}>{children}</CategoriesContext.Provider>
 };
