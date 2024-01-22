@@ -25,7 +25,7 @@ const App: FC = () => {
     const getData = async () => {
       try {
         const categoriesMap = await getCategoriesAndDocuments();
-        console.log(categoriesMap);
+        console.log(`Logging categories map from App component!: `, categoriesMap);
         setCategoriesMap(categoriesMap);
       } catch (error) {
         console.log(error)

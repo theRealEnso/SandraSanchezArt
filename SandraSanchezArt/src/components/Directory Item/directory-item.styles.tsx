@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 type ImageProps = {
-    imageURL: string;
+    imageurl: string;
 };
 
 export const BackgroundImage = styled.div<ImageProps>`

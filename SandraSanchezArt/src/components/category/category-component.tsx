@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect} from 'react';
+import {useContext, useState, useEffect, FC} from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CategoryContainer } from './category-styles';
@@ -10,7 +10,8 @@ import ProductCard from '../Product-card/product-card-component';
 import { CategoryItem } from '../../utilities/firebase-utilities';
 
 
-const Category = () => {
+
+const Category: FC = () => {
     const {categoriesMap} = useContext(CategoriesContext);
     const {category} = useParams();
 
@@ -20,7 +21,7 @@ const Category = () => {
         setItems(categoriesMap[category as string]);
     },[categoriesMap, category]);
 
-    // console.log(items);
+    console.log(items);
     // console.log(items[0].sizesAndPrices[0]);
     // console.log(typeof items[0].sizesAndPrices);
 

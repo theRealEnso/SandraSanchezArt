@@ -13,14 +13,14 @@ const directoryData = [
     {
         id: 2,
         categoryName: 'Illustrations',
-        imageUrl: 'https://i.ibb.co/F8y7Nx5/Dva.jpg',
+        imageUrl: 'https://i.ibb.co/n1V220T/dva.jpg',
         route: 'shop/illustrations'
     },
     {
         id: 3,
         categoryName: 'Fine Art',
         imageUrl: 'https://i.ibb.co/SfsGYKk/Confections-Oilonlinen-16x18in-1250.jpg',
-        route: 'shop/fine-art'
+        route: 'shop/fine art'
     },
 ]
 

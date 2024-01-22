@@ -330,105 +330,132 @@ const ART_DATA = [
             {
                 id: `confections`,
                 name: 'Confections',
-                price: 10000,
                 imageUrl: `https://i.ibb.co/SfsGYKk/Confections-Oilonlinen-16x18in-1250.jpg`,
                 description: 'Oil on linen',
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 10000}
+                ]
             },
 
             {
                 id: 'pottery',
                 name: 'Pottery',
-                price: 8000,
                 imageUrl: `https://i.ibb.co/hf78W08/DSC09143.jpg`,
-                description: 'Oil on linen'
+                description: 'Oil on linen',
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 8000},
+                ]
             },
 
             {
                 id: `grapes_silverware`,
                 name: 'Grapes and Silverware',
-                price: 9000,
                 imageUrl: `https://i.ibb.co/Fq48Lhn/grapes.jpg`,
-                description: 'Oil on linen'
+                description: 'Oil on linen',
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 9000},
+                ]
             },
 
             {
                 id: `coconut`,
                 name: 'Coconut',
-                price: 3000,
                 imageUrl: `https://i.ibb.co/GVnjdnv/coconut.jpg`,
-                description: 'Oil on linen'
+                description: 'Oil on linen',
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 3000},
+                ]
             },
 
             {
                 id: `grapes_basket`,
-                name: 'Grapesina Basket',
-                price: 3000,
+                name: 'Grapes in a Basket',
                 imageUrl: `https://i.ibb.co/MV0DZ2f/6-Sanchez-Sandra-Grapesina-Basket-Oilon-Linen-5x7-fineart.jpg`,
-                description: 'Oil on linen'
+                description: 'Oil on linen',
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 4000}
+                ]
             },
 
             {
                 id: `snailing_to_new_world`,
                 name: `Snailing to a New World`,
-                price: 15000,
                 imageUrl: `https://i.ibb.co/3hkJXDq/Snailingtoa-New-World-Anthony-Baus-Sandra-Sanchez.jpg`,
-                description: `Oil on linen`
+                description: `Oil on linen`,
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 15000}
+                ]
             },
 
             {
                 id: 'mary_portrait',
                 name: 'Mary Portrait',
-                price: 8500,
                 imageUrl: `https://i.ibb.co/bHd49kn/1-Mary-Sanchez-Sandra.jpg`,
-                description: `Oil on linen`
+                description: `Oil on linen`,
+                sizesAndPrices: [
+                    {size: `Original Oil Panting`, price: 9000}
+                ]
             },
 
             {
                 id: 'mopelola_portrait',
                 name: 'Mopelola Portrait',
-                price: 8500,
                 imageUrl: `https://i.ibb.co/kGVdmgj/1-Mopelola-Sandra-fineart-1.jpg`,
-                description: 'Oil on linen'
+                description: 'Oil on linen',
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 9000},
+                ]
             },
 
             {
                 id: `portrait_3`,
                 name: 'Portrait 3',
-                price: 8500,
                 imageUrl: `https://i.ibb.co/PrVWy0g/2-Alan-Sanchez-Sandra-1.jpg`,
-                description: 'Oil on linen'
+                description: 'Oil on linen',
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 9000},
+                ]
+                
             },
 
             {
                 id: `portrait_4`,
                 name: 'Portrait 4',
-                price: 8500,
                 imageUrl: `https://i.ibb.co/yQjFmnw/20190820-210105.jpg`,
-                description: 'Oil on linen'
+                description: 'Oil on linen',
+                sizesAndPrices: [
+                    {size: `Original Oil Painting`, price: 9000},
+                ]
             },
 
             {
                 id: 'katya_graphite',
                 name: 'Katya Graphite',
-                price: 5000,
                 imageUrl: 'https://i.ibb.co/5TCdMnH/7-Katya-Sanchez-Sandra.jpg',
-                description: 'Graphite'
+                description: 'Graphite',
+                sizesAndPrices: [
+                    {size: `Original Piece`, price: 5000},
+                ]
             },
 
             {
                 id: 'graphite_2',
                 name: `Graphite 2`,
-                price: 5000,
                 imageUrl: `https://i.ibb.co/grqtSTb/20181129-171148.jpg`,
                 description: 'Graphite',
+                sizesAndPrices: [
+                    {size: `Original Piece`, price: 5000},
+                ]
             },
 
             {
                 id: `old_man_graphite`,
                 name: `Old Man Graphite`,
-                price: 5000,
                 imageUrl: `https://i.ibb.co/hWm0GZR/20180512-170934.jpg`,
-                description: `Graphite`
+                description: `Graphite`,
+                sizesAndPrices: [
+                    {size: `Original Piece`, price: 5000},
+                ]
             }
         ]
     }

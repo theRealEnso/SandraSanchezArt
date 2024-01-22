@@ -146,6 +146,8 @@ export const getCategoriesAndDocuments = async () => {
   const categoriesMap = querySnapshot.docs.reduce((accumulator, docSnapshot) => {
     const {categoryName, items} = docSnapshot.data();
     accumulator[categoryName.toLowerCase()] = items;
+    // accumulator[categoryName.toLowerCase().replace(/\s/g, '')] = items;
+    // console.log(accumulator);
     return accumulator;
   }, {} as CategoryMap);
 

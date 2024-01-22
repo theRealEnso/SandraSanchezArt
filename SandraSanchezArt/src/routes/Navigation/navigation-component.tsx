@@ -74,7 +74,7 @@ const Navigation: FC = () => {
                             <Dropdown open={isShopDropdownOpen} onMouseEnter={onShopMouseEnter} onMouseLeave={onShopMouseLeave}>
                                 <DropdownLink to="shop/inks">Inks</DropdownLink>
                                 <DropdownLink to="shop/illustrations">Illustrations</DropdownLink>
-                                <DropdownLink to="shop/fine-art">Fine Art</DropdownLink>
+                                <DropdownLink to="shop/fine art">Fine Art</DropdownLink>
                             </Dropdown>
                         </NavItem>
                         {currentUser ? <NavItem><NavLink to='/' onClick={signOutAuthUser}>Sign Out</NavLink></NavItem> : <NavItem><NavLink to='/authentication'>Sign In</NavLink></NavItem> }

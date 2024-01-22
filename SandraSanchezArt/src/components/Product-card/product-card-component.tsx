@@ -1,8 +1,10 @@
 import {FC, ReactNode} from 'react';
 
-import { ProductCardContainer } from "./product-card-styles";
-import { CategoryItem } from "../../utilities/firebase-utilities";
+import { ProductCardContainer, ProductImageContainer, ProductTitle, ButtonContainer } from "./product-card-styles";
+import Button from '../Button/button-component';
+import { BUTTON_STYLE_CLASSES } from '../Button/button-style-classes';
 
+import { CategoryItem } from "../../utilities/firebase-utilities";
 type ProductCardProps = {
     product: CategoryItem;
     children?: ReactNode;
@@ -10,26 +12,21 @@ type ProductCardProps = {
 
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-    const { name, description, id, sizesAndPrices, imageUrl } = product;
+    const { name, imageUrl } = product;
 
     return (
         <ProductCardContainer>
-            <h1>{name}</h1>
-            <img src={imageUrl} alt={name} />
-            <p>{description}</p>
-            <div>
-                <h3>Sizes and Prices:</h3>
-                <ul>
-                    {sizesAndPrices.map(({ size, price }) => (
-                        <li key={size}>
-                            Size: {size}, Price: ${price}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <p>id: {id}</p>
+            <img src={imageUrl} alt={name}></img>
+            <ProductTitle>{name}</ProductTitle>
+
+            <ButtonContainer>
+                <Button buttonType={BUTTON_STYLE_CLASSES.default}>View Details</Button>
+                <Button buttonType={BUTTON_STYLE_CLASSES.google}>Add to Cart</Button>
+            </ButtonContainer>
+            
         </ProductCardContainer>
     );
 };
 
 export default ProductCard;
+
