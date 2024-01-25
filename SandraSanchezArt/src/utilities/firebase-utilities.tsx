@@ -26,7 +26,7 @@ export type CategoryItem = {
   imageUrl: string;
   description: string;
   sizesAndPrices: {size: string; price: number}[];
-} & {id: string; name: string; imageUrl: string; price: number; description: string}
+};
 
 export type CategoryObject = {
   categoryName: string;

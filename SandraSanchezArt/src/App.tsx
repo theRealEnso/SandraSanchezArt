@@ -12,6 +12,7 @@ import Mentoring from './routes/Mentoring/mentoring-component';
 import Contact from './routes/Contact/contact-component';
 import Authentication from './routes/Authentication/authentication-component';
 import Category from './components/category/category-component';
+import ProductDetails from './routes/Product-details/product-details-component';
 
 import { getCategoriesAndDocuments } from './utilities/firebase-utilities';
 
@@ -46,7 +47,10 @@ const App: FC = () => {
         <Route path='about' element={<AboutMe />}></Route>
         <Route path='mentoring' element={<Mentoring></Mentoring>}></Route>
         <Route path='contact' element={<Contact></Contact>}></Route>
+
         <Route path='shop/:category' element={<Category></Category>}></Route>
+        <Route path='shop/:category/:id' element={<ProductDetails></ProductDetails>}></Route>
+
         <Route path='authentication' element={<Authentication />}></Route>
       </Route>
   </Routes>

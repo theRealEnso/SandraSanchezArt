@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, FC, ReactNode } from "react";
-import { CategoryMap, getCategoriesAndDocuments } from "../utilities/firebase-utilities";
+import { CategoryMap} from "../utilities/firebase-utilities";
 
 type CategoriesContextProps = {
     categoriesMap: CategoryMap;

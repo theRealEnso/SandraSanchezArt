@@ -7,7 +7,7 @@ type ImageUrlProps = {
 export const ButtonContainer = styled.div`
     width: 100%;
     position: absolute; //relative to nearest positioned ancestor (i.e nearest parent element w/ position value of relative, absolute, or fixed. In this case, is the relatively positioned ProductCardContainer)
-    top: 300px;
+    top: 350px;
     display: none;
 `
 

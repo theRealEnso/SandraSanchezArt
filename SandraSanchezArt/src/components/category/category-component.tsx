@@ -1,5 +1,5 @@
 import {useContext, useState, useEffect, FC} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 
 import { CategoryContainer } from './category-styles';
 
