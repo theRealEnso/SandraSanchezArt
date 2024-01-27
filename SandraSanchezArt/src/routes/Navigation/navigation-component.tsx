@@ -1,16 +1,23 @@
 import { Fragment, FC, MouseEvent, useContext, useState, useEffect} from "react";
-import { NavigationContainer, NavbarContainer, NavList, NavItem, NavLink, Dropdown, DropdownLink, DropdownToggle, HeartsLogoContainer, HeartsLogo, ShoppingCartContainer, ShoppingCart, CartQuantityDisplay } from "./navigation-styles";
+import { NavigationContainer, NavbarContainer, NavList, NavItem, NavLink, Dropdown, DropdownLink, DropdownToggle, HeartsLogoContainer, HeartsLogo, ShoppingCartContainer, ShoppingCart, CartQuantityDisplay} from "./navigation-styles";
 import heartsLogo from '../../assets/images/hearts.jpg'; // attribute to <a href="https://www.freepik.com/free-vector/hand-drawn-overlapping-hearts-black-colour_94357366.htm#query=heart&position=49&from_view=search&track=sph&uuid=31435bda-b504-4a85-a5ce-60fd6359f940">Image by juicy_fish</a> on Freepik
 
 import { Outlet } from "react-router-dom";
+
 import { UserContext } from "../../contexts/user-context";
+import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
 import { signOutAuthUser } from "../../utilities/firebase-utilities";
 
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown-component";
+
 const Navigation: FC = () => {
     const {currentUser} = useContext(UserContext);
+    const {cartCount, cartItems} = useContext(ShoppingCartContext);
+
     const [isMentoringDropdownOpen, setIsMentoringDropdownOpen] = useState(false);
     const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
+    const [isCartDropdownOpen, setIsCartDropdownOpen] = useState(false);
 
     const toggleMentoringDropDown = () => setIsMentoringDropdownOpen(!isMentoringDropdownOpen);
     const onMentoringMouseEnter = () => setIsMentoringDropdownOpen(true);
@@ -20,31 +27,35 @@ const Navigation: FC = () => {
     const onShopMouseEnter = () => setIsShopDropdownOpen(true);
     const onShopMouseLeave = () => setIsShopDropdownOpen(false);
 
+    const toggleCartDropdown = () => setIsCartDropdownOpen(!isCartDropdownOpen);
+
 
     useEffect(() => {
-        const closeMentoringDropdown = (event) => {
+        const closeMentoringDropdown = (event: MouseEvent<HTMLElement>) => {
             // console.log(event);
-            if(event.target.id !== 'mentoring'){
+            const target = event.target as HTMLElement;
+            if(target.id !== 'mentoring'){
                 setIsMentoringDropdownOpen(false);
             }    
         };
 
-        document.body.addEventListener("click", closeMentoringDropdown);
+        document.body.addEventListener("click", closeMentoringDropdown as any);
 
-        return () => document.body.removeEventListener("click", closeMentoringDropdown)
+        return () => document.body.removeEventListener("click", closeMentoringDropdown as any)
     }, []);
 
     useEffect(() => {
-        const closeShopDropdown = (event) => {
+        const closeShopDropdown = (event: MouseEvent<HTMLElement>) => {
             // console.log(event);
-            if(event.target.id !== "shop"){
+            const target = event.target as HTMLElement;
+            if(target.id !== "shop"){
                 setIsShopDropdownOpen(false)
             }   
         }
 
-        document.body.addEventListener("click", closeShopDropdown);
+        document.body.addEventListener("click", closeShopDropdown as any);
 
-        return () => document.body.removeEventListener("click", closeShopDropdown);
+        return () => document.body.removeEventListener("click", closeShopDropdown as any);
     },[])
 
     return (
@@ -80,11 +91,13 @@ const Navigation: FC = () => {
                         {currentUser ? <NavItem><NavLink to='/' onClick={signOutAuthUser}>Sign Out</NavLink></NavItem> : <NavItem><NavLink to='/authentication'>Sign In</NavLink></NavItem> }
                     </NavList>
 
-                    <ShoppingCartContainer>
+                    <ShoppingCartContainer onClick={toggleCartDropdown}>
                         <ShoppingCart fontSize='large'></ShoppingCart>
-                        <CartQuantityDisplay>0</CartQuantityDisplay>
+                        <CartQuantityDisplay>{cartCount}</CartQuantityDisplay>
                     </ShoppingCartContainer>
                 </NavbarContainer>
+
+                {isCartDropdownOpen && <CartDropdown></CartDropdown>}
 
             </NavigationContainer>
 

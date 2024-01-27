@@ -1,11 +1,13 @@
-import {useState, FC, ChangeEvent} from 'react';
+import {useState, useContext, FC, ChangeEvent} from 'react';
 import { useLocation } from 'react-router-dom';
 import parse from 'html-react-parser';
 
 import { ProductDetailsContainer, ImageContainer, DetailsContainer, SelectionContainer, OptionsContainer, QuantityContainer, InputContainer, QuantityInput, QuantityButton, AddToCartButton, DescriptionContainer } from './product-details.styles';
 
-import Button from '../../components/Button/button-component';
+// import Button from '../../components/Button/button-component';
 import { BUTTON_STYLE_CLASSES } from '../../components/Button/button-style-classes';
+
+import { ShoppingCartContext } from '../../contexts/shopping-cart-context';
 
 type SizeAndPriceProps = {
     size: string;
@@ -14,8 +16,11 @@ type SizeAndPriceProps = {
 
 
 const ProductDetails: FC = () => {
+    const {addProductToCart} = useContext(ShoppingCartContext);
+
     const location = useLocation();
     const {product} = location.state;
+
     const {name, imageUrl, sizesAndPrices, description} = product;
 
     const parsedDescription = parse(description);
@@ -24,6 +29,7 @@ const ProductDetails: FC = () => {
 
     const [price, setPrice] = useState(defaultPrice);
     const [selectedSize, setSelectedSize] = useState(sizesAndPrices[0].size);
+    const [item, setItem] = useState({});
     const [quantity, setQuantity] = useState<number | "">(1);
 
     const handleUserSelection = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -36,6 +42,7 @@ const ProductDetails: FC = () => {
         if(selectedSizeObject){
             setSelectedSize(selectedSizeObject.size);
             setPrice(selectedSizeObject.price);
+            setItem(product);
         }
     };
 
@@ -53,14 +60,22 @@ const ProductDetails: FC = () => {
     };
 
     const handleDecrement = () => {
-        setQuantity((quantity) => typeof quantity === 'number' && quantity > 1 ? quantity -1 : 1);
+        setQuantity((quantity) => typeof quantity === 'number' && quantity > 1 ? quantity - 1 : 1);
 
         // if(quantity > 1){
         //     setQuantity(quantity - 1)
         // }
     };
 
-    if(!product) {
+    const addSelectedOptionAndQuantityToCart = () => {
+        if(typeof quantity === "number" && quantity > 0){ // to fix type error, since quantity is defined to be a number or empty string in useState var
+            addProductToCart(item, selectedSize, quantity);
+        } else {
+            console.log(`Invalid quantity: ${quantity}`);
+        }
+    };
+
+    if(!product) { // put here instead of at top bc useState throws error
         return <h1>Whoops, looks like there was an error loading the page!</h1>
     }
 
@@ -95,7 +110,7 @@ const ProductDetails: FC = () => {
                         </InputContainer>
                     </QuantityContainer>
                                 
-                    <AddToCartButton buttonType={BUTTON_STYLE_CLASSES.google}>Add to Cart</AddToCartButton>
+                    <AddToCartButton buttonType={BUTTON_STYLE_CLASSES.google} onClick={addSelectedOptionAndQuantityToCart}>Add to Cart</AddToCartButton>
                 </SelectionContainer>
 
                 <DescriptionContainer>{parsedDescription}</DescriptionContainer>

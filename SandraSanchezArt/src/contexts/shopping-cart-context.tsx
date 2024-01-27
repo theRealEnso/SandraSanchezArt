@@ -4,7 +4,17 @@ import { CategoryItem } from "../utilities/firebase-utilities";
 
 type Product = CategoryItem & {quantity: number};
 
-const addCartItem = (cartItems: Product[], productToAdd: CategoryItem) => {
+const addProduct = (cartItems: Product[], productToAdd: CategoryItem, selectedOption: string, amount: number) => {
+    const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
+
+    if(itemExistsInCart){
+        return cartItems.map((cartItem) => cartItem.id === productToAdd.id ? {...cartItem, quantity: cartItem.quantity + amount} : cartItem)
+    }
+
+    return [...cartItems, {...productToAdd, quantity: amount, selectedSize: selectedOption}]
+};
+
+const addOneCartItem = (cartItems: Product[], productToAdd: CategoryItem) => {
     const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
 
     if(itemExistsInCart){
@@ -35,29 +45,34 @@ type CartProviderProps = {
 type CartContextProps = {
     cartItems: Product[];
     setCartItems: React.Dispatch<React.SetStateAction<Product[]>>;
-    addItemToCart: (productToAdd: CategoryItem) => void;
+    addProductToCart: (productToAdd: CategoryItem, selectedOption: string, amount: number) => void;
+    addOneItemToCart: (productToAdd: CategoryItem) => void;
     removeOneItemFromCart: (productToRemove: CategoryItem) => void;
     clearItemFromCart: (productToClear: CategoryItem) => void;
     cartTotal: number;
+    cartCount: number;
 
 };
 
-export const CartContext = createContext<CartContextProps>({
+export const ShoppingCartContext = createContext<CartContextProps>({
     cartItems: [],
     setCartItems: () => {},
-    addItemToCart: () => {},
+    addProductToCart: () => {},
+    addOneItemToCart: () => {},
     removeOneItemFromCart: () => {},
     clearItemFromCart: () => {},
     cartTotal: 0,
+    cartCount: 0,
 });
 
-export const CartProvider: FC<CartProviderProps> = ({children}) => {
+export const ShoppingCartProvider: FC<CartProviderProps> = ({children}) => {
     const [cartItems, setCartItems] = useState<Product[]>([]);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [cartTotal, setCartTotal] = useState(0);
     const [cartCount, setCartCount] = useState(0);
 
-    const addItemToCart = (productToAdd: CategoryItem) => setCartItems(addCartItem(cartItems, productToAdd));
+    const addProductToCart = (productToAdd: CategoryItem, selectedOption: string, amount: number) => setCartItems(addProduct(cartItems, productToAdd, selectedOption, amount));
+    const addOneItemToCart = (productToAdd: CategoryItem) => setCartItems(addOneCartItem(cartItems, productToAdd));
     const removeOneItemFromCart = (productToRemove: CategoryItem) => setCartItems(removeOneCartItem(cartItems, productToRemove));
     const clearItemFromCart = (productToClear: CategoryItem) => setCartItems(clearCartItem(cartItems, productToClear));
 
@@ -72,6 +87,6 @@ export const CartProvider: FC<CartProviderProps> = ({children}) => {
     }, [cartItems])
     
     
-    const value = {cartItems, setCartItems, isCartOpen, setIsCartOpen, cartTotal ,setCartTotal, cartCount, setCartCount, addItemToCart, removeOneItemFromCart, clearItemFromCart};
-    return <CartContext.Provider value={value}>{children}</CartContext.Provider>
+    const value = {cartItems, setCartItems, isCartOpen, setIsCartOpen, cartTotal ,setCartTotal, cartCount, setCartCount, addProductToCart, addOneItemToCart, removeOneItemFromCart, clearItemFromCart};
+    return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>
 }

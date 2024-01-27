@@ -119,6 +119,7 @@ export const ShoppingCartContainer = styled.div`
     display: flex;
     align-items: center;
     margin: 0px 40px 15px; 0;
+    cursor: pointer;
 `
 
 export const ShoppingCart = styled(ShoppingBagOutlinedIcon)`
