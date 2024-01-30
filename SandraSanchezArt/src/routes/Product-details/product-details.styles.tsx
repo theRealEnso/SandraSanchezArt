@@ -25,8 +25,11 @@ export const ImageContainer = styled.div`
     overflow: hidden;
 
     img {
-        width: 400px;
-        height: 500px;
+        width: 500px;
+        height: 600px;
+        object-fit: cover;
+        border-radius: 10px;
+
     }
 `
 export const DetailsContainer = styled.div`

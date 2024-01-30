@@ -26,6 +26,7 @@ export type CategoryItem = {
   imageUrl: string;
   description: string;
   sizesAndPrices: {size: string; price: number}[];
+  key: string;
 };
 
 export type CategoryObject = {

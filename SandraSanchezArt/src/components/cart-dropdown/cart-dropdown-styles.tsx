@@ -11,5 +11,15 @@ export const CartDropdownContainer = styled.div`
     border: 1px solid black;
     background-color: white;
     z-index: 5
-    // overflow: scroll;
+`
+
+export const ListContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+`
+export const SubTotalContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `

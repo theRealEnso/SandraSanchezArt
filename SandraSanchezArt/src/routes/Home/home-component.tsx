@@ -1,8 +1,5 @@
-import { Outlet } from "react-router-dom";
 import Directory from "../../components/directory/directory-component";
 import Footer from "../../components/Footer/footer-component";
-
-
 
 const Home = () => {
     return (
@@ -12,8 +9,7 @@ const Home = () => {
             <section>
                 <Footer></Footer>
             </section>
-  
-            <Outlet></Outlet>
+
         </div>
     );
 };

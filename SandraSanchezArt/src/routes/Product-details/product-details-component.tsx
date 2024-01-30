@@ -1,6 +1,7 @@
-import {useState, useContext, FC, ChangeEvent} from 'react';
+import {useState, useContext, useEffect, FC, ChangeEvent} from 'react';
 import { useLocation } from 'react-router-dom';
 import parse from 'html-react-parser';
+import {v4 as uuidv4} from 'uuid';
 
 import { ProductDetailsContainer, ImageContainer, DetailsContainer, SelectionContainer, OptionsContainer, QuantityContainer, InputContainer, QuantityInput, QuantityButton, AddToCartButton, DescriptionContainer } from './product-details.styles';
 
@@ -9,6 +10,8 @@ import { BUTTON_STYLE_CLASSES } from '../../components/Button/button-style-class
 
 import { ShoppingCartContext } from '../../contexts/shopping-cart-context';
 
+import { CategoryItem } from '../../utilities/firebase-utilities';
+
 type SizeAndPriceProps = {
     size: string;
     price: number;
@@ -16,7 +19,7 @@ type SizeAndPriceProps = {
 
 
 const ProductDetails: FC = () => {
-    const {addProductToCart} = useContext(ShoppingCartContext);
+    const {addProductAndQuantityToCart} = useContext(ShoppingCartContext);
 
     const location = useLocation();
     const {product} = location.state;
@@ -29,8 +32,12 @@ const ProductDetails: FC = () => {
 
     const [price, setPrice] = useState(defaultPrice);
     const [selectedSize, setSelectedSize] = useState(sizesAndPrices[0].size);
-    const [item, setItem] = useState({});
     const [quantity, setQuantity] = useState<number | "">(1);
+    const [uniqueId, setUniqueId] = useState(uuidv4());
+
+    useEffect(() => {
+        setUniqueId(uuidv4());
+    }, [selectedSize])
 
     const handleUserSelection = (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedSize = event.target.value;
@@ -42,15 +49,26 @@ const ProductDetails: FC = () => {
         if(selectedSizeObject){
             setSelectedSize(selectedSizeObject.size);
             setPrice(selectedSizeObject.price);
-            setItem(product);
         }
     };
 
+    console.log(price);
+
     const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newQuantity = event.target.value;
+        const newQuantity = event.target.value; // value is of string data type
+        console.log(typeof newQuantity);
+
+        //check if newQuantity is a either a empty string or if string comsists of digits 0-9. Update `quantity` as empty string if empty is received. Otherwise, update quantity as the the parsed integer value of the string
         if (/^\d*$/.test(newQuantity)) {
             setQuantity(newQuantity === '' ? '' : parseInt(newQuantity, 10));
         }
+
+        //notes:
+        // /^\d*$/:
+        // /: Delimiters for the regex pattern.
+        // ^: Anchors the match at the beginning of the string.
+        // \d*: Matches any digit (\d) zero or more times (*).
+        // $: Anchors the match at the end of the string.
     };
 
     const handleIncrement = () => {
@@ -69,7 +87,7 @@ const ProductDetails: FC = () => {
 
     const addSelectedOptionAndQuantityToCart = () => {
         if(typeof quantity === "number" && quantity > 0){ // to fix type error, since quantity is defined to be a number or empty string in useState var
-            addProductToCart(item, selectedSize, quantity);
+            addProductAndQuantityToCart(product, selectedSize, price, quantity, uniqueId);
         } else {
             console.log(`Invalid quantity: ${quantity}`);
         }
@@ -105,7 +123,7 @@ const ProductDetails: FC = () => {
                         <label>QUANTITY</label>
                         <InputContainer>
                             <QuantityButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={handleDecrement}>-</QuantityButton>
-                            <QuantityInput value={quantity} onChange={handleQuantityChange}></QuantityInput>
+                            <QuantityInput type="number" value={quantity} onChange={handleQuantityChange}></QuantityInput>
                             <QuantityButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={handleIncrement}>+</QuantityButton>
                         </InputContainer>
                     </QuantityContainer>
