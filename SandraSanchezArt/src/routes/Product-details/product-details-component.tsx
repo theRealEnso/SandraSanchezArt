@@ -33,10 +33,10 @@ const ProductDetails: FC = () => {
     const [price, setPrice] = useState(defaultPrice);
     const [selectedSize, setSelectedSize] = useState(sizesAndPrices[0].size);
     const [quantity, setQuantity] = useState<number | "">(1);
-    const [uniqueId, setUniqueId] = useState(uuidv4());
+    const [key, setKey] = useState(uuidv4());
 
     useEffect(() => {
-        setUniqueId(uuidv4());
+        setKey(uuidv4());
     }, [selectedSize])
 
     const handleUserSelection = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -87,7 +87,7 @@ const ProductDetails: FC = () => {
 
     const addSelectedOptionAndQuantityToCart = () => {
         if(typeof quantity === "number" && quantity > 0){ // to fix type error, since quantity is defined to be a number or empty string in useState var
-            addProductAndQuantityToCart(product, selectedSize, price, quantity, uniqueId);
+            addProductAndQuantityToCart(product, selectedSize, price, quantity, key);
         } else {
             console.log(`Invalid quantity: ${quantity}`);
         }

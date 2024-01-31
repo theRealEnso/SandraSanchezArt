@@ -24,7 +24,7 @@ const CartItem: FC<CartItemProps> = ({cartItem}) => {
     };
 
     const removeOneItem = () => {
-        removeOneItemFromCart(cartItem, selectedSize, key);
+        removeOneItemFromCart(cartItem, key);
         // setAmount((quantity) => typeof quantity === "number" ? quantity - 1 : 1);
         // // setAmount(quantity - 1);
     };
