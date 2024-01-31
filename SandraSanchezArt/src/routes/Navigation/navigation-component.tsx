@@ -1,5 +1,5 @@
 import { Fragment, FC, MouseEvent, useContext, useState, useEffect} from "react";
-import { NavigationContainer, NavbarContainer, NavList, NavItem, NavLink, Dropdown, DropdownLink, DropdownToggle, HeartsLogoContainer, HeartsLogo, ShoppingCartContainer, ShoppingCart, CartQuantityDisplay, SuccessMessageContainer} from "./navigation-styles";
+import { NavigationContainer, NavbarContainer, NavList, NavItem, NavLink, Dropdown, DropdownLink, DropdownToggle, HeartsLogoContainer, HeartsLogo, ShoppingCartContainer, ShoppingCart, CartQuantityDisplay, SuccessMessageContainer, Confetti} from "./navigation-styles";
 import heartsLogo from '../../assets/images/hearts.jpg'; // attribute to <a href="https://www.freepik.com/free-vector/hand-drawn-overlapping-hearts-black-colour_94357366.htm#query=heart&position=49&from_view=search&track=sph&uuid=31435bda-b504-4a85-a5ce-60fd6359f940">Image by juicy_fish</a> on Freepik
 
 import { Outlet } from "react-router-dom";
@@ -13,7 +13,7 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown-component
 
 const Navigation: FC = () => {
     const {currentUser} = useContext(UserContext);
-    const {cartCount, cartItemIsAdded} = useContext(ShoppingCartContext);
+    const {cartCount, cartItemIsAdded, setCartItemIsAdded} = useContext(ShoppingCartContext);
 
     const [isMentoringDropdownOpen, setIsMentoringDropdownOpen] = useState(false);
     const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
@@ -29,6 +29,8 @@ const Navigation: FC = () => {
 
     const toggleCartDropdown = () => setIsCartDropdownOpen(!isCartDropdownOpen);
 
+    const handleExplosionComplete = () => setCartItemIsAdded(false);
+
 
     useEffect(() => {
         const closeMentoringDropdown = (event: MouseEvent<HTMLElement>) => {
@@ -39,9 +41,9 @@ const Navigation: FC = () => {
             }    
         };
 
-        document.body.addEventListener("click", closeMentoringDropdown as any);
+        document.body.addEventListener("click", closeMentoringDropdown);
 
-        return () => document.body.removeEventListener("click", closeMentoringDropdown as any)
+        return () => document.body.removeEventListener("click", closeMentoringDropdown)
     }, []);
 
     useEffect(() => {
@@ -53,9 +55,9 @@ const Navigation: FC = () => {
             }   
         }
 
-        document.body.addEventListener("click", closeShopDropdown as any);
+        document.body.addEventListener("click", closeShopDropdown);
 
-        return () => document.body.removeEventListener("click", closeShopDropdown as any);
+        return () => document.body.removeEventListener("click", closeShopDropdown);
     },[])
 
     return (
@@ -91,7 +93,8 @@ const Navigation: FC = () => {
                         {currentUser ? <NavItem><NavLink to='/' onClick={signOutAuthUser}>Sign Out</NavLink></NavItem> : <NavItem><NavLink to='/authentication'>Sign In</NavLink></NavItem> }
                     </NavList>
 
-                    <ShoppingCartContainer onClick={toggleCartDropdown}>
+                    <ShoppingCartContainer onClick={toggleCartDropdown} $bounce={+cartItemIsAdded}>
+                        {cartItemIsAdded && <Confetti particleSize={6} particleCount={100} onComplete={handleExplosionComplete}></Confetti>}
                         <ShoppingCart fontSize='large'></ShoppingCart>
                         <CartQuantityDisplay>{cartCount}</CartQuantityDisplay>
                     </ShoppingCartContainer>
@@ -100,7 +103,7 @@ const Navigation: FC = () => {
                 {isCartDropdownOpen && <CartDropdown></CartDropdown>}
 
                 {cartItemIsAdded && 
-                    <SuccessMessageContainer show={cartItemIsAdded}>
+                    <SuccessMessageContainer $show={+cartItemIsAdded}>
                         <h4>Item successfully added to cart!</h4>
                     </SuccessMessageContainer> 
                 }

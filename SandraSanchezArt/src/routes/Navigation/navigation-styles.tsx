@@ -2,6 +2,7 @@ import styled, {keyframes, css} from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const hoverColor = `rgb(255, 51, 119)`;
 
@@ -10,8 +11,12 @@ type DropdownProps = {
 };
 
 type SuccessMessageProps = {
-    show: boolean;
+    $show: boolean | number;
 };
+
+type BounceProps = {
+    $bounce: boolean | number;
+}
 
 const fadeIn = keyframes`
     from {
@@ -28,6 +33,17 @@ const fadeOut = keyframes`
     }
     to {
         opacity: 0;
+    }
+`
+const bounceAnimation = keyframes`
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
     }
 `
 
@@ -136,12 +152,13 @@ export const DropdownLink = styled(Link)`
   }
 `;
 
-export const ShoppingCartContainer = styled.div`
+export const ShoppingCartContainer = styled.div<BounceProps>`
     position: relative;
     display: flex;
     align-items: center;
     margin: 0px 40px 15px; 0;
     cursor: pointer;
+    animation: ${({$bounce}) => $bounce ? css`animation: ${bounceAnimation} 1s ease-in-out` : 'none'}
 `
 
 export const ShoppingCart = styled(ShoppingBagOutlinedIcon)`
@@ -166,16 +183,23 @@ export const SuccessMessageContainer = styled.div<SuccessMessageProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: ${({show}) => (show ? 1 : 0)};
-    ${({ show }) => (show
+
+    opacity: ${({ $show }) => ($show ? 1 : 0)};
+    ${({ $show }) => ($show
         ? css`animation: ${fadeIn} 0.6s ease-in-out;`
         : css`animation: ${fadeOut} 0.6s ease-in-out; display: none;`)
     }
+
 
     h4 {
         color: #fff;
     };
 
+`
+
+export const Confetti = styled(ConfettiExplosion)`
+    position: absolute;
+    width: 100;
 `
 // import styled from 'styled-components';
 // import { Link } from 'react-router-dom';

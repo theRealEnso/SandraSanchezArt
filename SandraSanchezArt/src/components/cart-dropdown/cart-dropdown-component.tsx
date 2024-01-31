@@ -14,14 +14,20 @@ export const CartDropdown = () => {
 
     return (
         <CartDropdownContainer>
+
             <ListContainer>
-                {cartItems ? (cartItems.map((cartItem, index) => <CartItem key={index} cartItem={cartItem}></CartItem>)) : <span>Your cart is currently empty!</span>} 
+                {cartItems.length
+                    ? (cartItems.map((cartItem) => <CartItem  key={cartItem.key} cartItem={cartItem}></CartItem>))
+                    : <span>Your cart is currently empty!</span>
+                }
             </ListContainer>
 
             <SubTotalContainer>
                 <h3>Sub-total: ${cartTotal} </h3>
                 <Button buttonType={BUTTON_STYLE_CLASSES.google}>Go to Checkout</Button>
             </SubTotalContainer>
+
+            
             
         </CartDropdownContainer>
     );
