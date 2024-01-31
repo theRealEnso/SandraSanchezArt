@@ -10,8 +10,6 @@ import { BUTTON_STYLE_CLASSES } from '../../components/Button/button-style-class
 
 import { ShoppingCartContext } from '../../contexts/shopping-cart-context';
 
-import { CategoryItem } from '../../utilities/firebase-utilities';
-
 type SizeAndPriceProps = {
     size: string;
     price: number;
@@ -19,7 +17,7 @@ type SizeAndPriceProps = {
 
 
 const ProductDetails: FC = () => {
-    const {addProductAndQuantityToCart} = useContext(ShoppingCartContext);
+    const {addProductAndQuantityToCart, setCartItemIsAdded} = useContext(ShoppingCartContext);
 
     const location = useLocation();
     const {product} = location.state;
@@ -88,6 +86,10 @@ const ProductDetails: FC = () => {
     const addSelectedOptionAndQuantityToCart = () => {
         if(typeof quantity === "number" && quantity > 0){ // to fix type error, since quantity is defined to be a number or empty string in useState var
             addProductAndQuantityToCart(product, selectedSize, price, quantity, key);
+            setQuantity(1);
+            setCartItemIsAdded(true);
+
+            setTimeout(() => setCartItemIsAdded(false), 3000);
         } else {
             console.log(`Invalid quantity: ${quantity}`);
         }

@@ -30,11 +30,11 @@ const CartItem: FC<CartItemProps> = ({cartItem}) => {
     };
     
     const handleQuantityInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === id);
+        const itemExistsInCart = cartItems.find((cartItem) => cartItem.key === key);
         const newAmount = event.target.value;
     
         if (/^\d*$/.test(newAmount) && itemExistsInCart) { // .test returns a boolean
-            const updatedCartItems = cartItems.map((cartItem) => cartItem.id === id ? { ...cartItem, quantity: newAmount === '' ? '' : parseInt(newAmount, 10) } : cartItem);
+            const updatedCartItems = cartItems.map((cartItem) => cartItem.key === key ? { ...cartItem, quantity: newAmount === '' ? '' : parseInt(newAmount, 10) } : cartItem);
 
             setCartItems(updatedCartItems);
             // setAmount(newAmount === '' ? '' : parseInt(newAmount, 10));

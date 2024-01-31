@@ -1,5 +1,5 @@
 import { Fragment, FC, MouseEvent, useContext, useState, useEffect} from "react";
-import { NavigationContainer, NavbarContainer, NavList, NavItem, NavLink, Dropdown, DropdownLink, DropdownToggle, HeartsLogoContainer, HeartsLogo, ShoppingCartContainer, ShoppingCart, CartQuantityDisplay} from "./navigation-styles";
+import { NavigationContainer, NavbarContainer, NavList, NavItem, NavLink, Dropdown, DropdownLink, DropdownToggle, HeartsLogoContainer, HeartsLogo, ShoppingCartContainer, ShoppingCart, CartQuantityDisplay, SuccessMessageContainer} from "./navigation-styles";
 import heartsLogo from '../../assets/images/hearts.jpg'; // attribute to <a href="https://www.freepik.com/free-vector/hand-drawn-overlapping-hearts-black-colour_94357366.htm#query=heart&position=49&from_view=search&track=sph&uuid=31435bda-b504-4a85-a5ce-60fd6359f940">Image by juicy_fish</a> on Freepik
 
 import { Outlet } from "react-router-dom";
@@ -13,7 +13,7 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown-component
 
 const Navigation: FC = () => {
     const {currentUser} = useContext(UserContext);
-    const {cartCount, cartItems} = useContext(ShoppingCartContext);
+    const {cartCount, cartItemIsAdded} = useContext(ShoppingCartContext);
 
     const [isMentoringDropdownOpen, setIsMentoringDropdownOpen] = useState(false);
     const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
@@ -99,7 +99,15 @@ const Navigation: FC = () => {
 
                 {isCartDropdownOpen && <CartDropdown></CartDropdown>}
 
+                {cartItemIsAdded && 
+                    <SuccessMessageContainer show={cartItemIsAdded}>
+                        <h4>Item successfully added to cart!</h4>
+                    </SuccessMessageContainer> 
+                }
+
             </NavigationContainer>
+
+            
 
             <Outlet></Outlet>
         </Fragment>

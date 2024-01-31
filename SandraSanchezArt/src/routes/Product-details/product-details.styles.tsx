@@ -5,7 +5,7 @@ import Button from '../../components/Button/button-component';
 export const ProductDetailsContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
-    width: 70%;
+    width: 80%;
     margin: auto;
 
     h2 {

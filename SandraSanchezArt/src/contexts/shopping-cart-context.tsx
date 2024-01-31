@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, ReactNode, FC } from "react"
 
 import { CategoryItem } from "../utilities/firebase-utilities";
 
-export type Product = CategoryItem & {quantity: number, selectedSize: string, key: string};
+export type Product = CategoryItem & {quantity: number, selectedSize: string, itemPrice: number, key: string};
 
 const addProductAndQuantity = (cartItems: Product[], productToAdd: CategoryItem, selectedOption: string, price: number, amount: number, key: string) => {
     const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === productToAdd.id && cartItem.selectedSize === selectedOption);
@@ -54,6 +54,10 @@ type CartContextProps = {
     clearItemFromCart: (productToClear: CategoryItem) => void;
     cartTotal: number;
     cartCount: number;
+    cartItemIsAdded: boolean;
+    setCartItemIsAdded: () => void;
+    isCartOpen: boolean;
+    setIsCartOpen: () => void;
 };
 
 export const ShoppingCartContext = createContext<CartContextProps>({
@@ -65,6 +69,10 @@ export const ShoppingCartContext = createContext<CartContextProps>({
     clearItemFromCart: () => {},
     cartTotal: 0,
     cartCount: 0,
+    cartItemIsAdded: false,
+    setCartItemIsAdded: () => null,
+    isCartOpen: false,
+    setIsCartOpen: () => null,
 });
 
 export const ShoppingCartProvider: FC<CartProviderProps> = ({children}) => {
@@ -72,6 +80,7 @@ export const ShoppingCartProvider: FC<CartProviderProps> = ({children}) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [cartTotal, setCartTotal] = useState(0);
     const [cartCount, setCartCount] = useState(0);
+    const [cartItemIsAdded, setCartItemIsAdded] = useState(false);
 
     const addProductAndQuantityToCart = (productToAdd: CategoryItem, selectedOption: string, price: number, amount: number, key: string) => setCartItems(addProductAndQuantity(cartItems, productToAdd, selectedOption, price, amount, key));
     const addOneItemToCart = (productToAdd: CategoryItem, selectedOption: string) => setCartItems(addOneCartItem(cartItems, productToAdd, selectedOption));
@@ -83,11 +92,12 @@ export const ShoppingCartProvider: FC<CartProviderProps> = ({children}) => {
         setCartCount(newCartCount);
     }, [cartItems]);
 
-    // useEffect(() => {
-    //     const newCartTotal = cartItems.reduce((accumulator, cartItem) => accumulator + (cartItem.price * cartItem.quantity), 0)
-    // },[cartItems]);
+    useEffect(() => {
+        const newCartTotal = cartItems.reduce((accumulator, cartItem) => accumulator + (cartItem.itemPrice * cartItem.quantity), 0);
+        setCartTotal(newCartTotal);
+    },[cartItems]);
     
     
-    const value = {cartItems, setCartItems, isCartOpen, setIsCartOpen, cartTotal ,setCartTotal, cartCount, setCartCount, addProductAndQuantityToCart, addOneItemToCart, removeOneItemFromCart, clearItemFromCart};
+    const value = {cartItems, setCartItems, isCartOpen, setIsCartOpen, cartTotal ,setCartTotal, cartCount, setCartCount, addProductAndQuantityToCart, addOneItemToCart, removeOneItemFromCart, clearItemFromCart, cartItemIsAdded, setCartItemIsAdded};
     return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>
 }

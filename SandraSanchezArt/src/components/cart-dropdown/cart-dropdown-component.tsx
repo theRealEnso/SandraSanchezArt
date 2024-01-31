@@ -5,8 +5,11 @@ import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
 import CartItem from "../cart-item/cart-item-component";
 
+import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
+import Button from "../Button/button-component";
+
 export const CartDropdown = () => {
-    const {cartItems} = useContext(ShoppingCartContext);
+    const {cartItems, cartTotal} = useContext(ShoppingCartContext);
     console.log(cartItems);
 
     return (
@@ -16,7 +19,8 @@ export const CartDropdown = () => {
             </ListContainer>
 
             <SubTotalContainer>
-                <h2>Sub-total: </h2>
+                <h3>Sub-total: ${cartTotal} </h3>
+                <Button buttonType={BUTTON_STYLE_CLASSES.google}>Go to Checkout</Button>
             </SubTotalContainer>
             
         </CartDropdownContainer>

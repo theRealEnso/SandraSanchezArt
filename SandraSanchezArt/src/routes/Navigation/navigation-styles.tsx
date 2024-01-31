@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes, css} from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
@@ -7,7 +7,29 @@ const hoverColor = `rgb(255, 51, 119)`;
 
 type DropdownProps = {
     open: boolean;
-}
+};
+
+type SuccessMessageProps = {
+    show: boolean;
+};
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+`
+
+const fadeOut = keyframes`
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+`
 
 export const HeartsLogoContainer = styled(Link)`
     display: flex;
@@ -134,6 +156,26 @@ export const CartQuantityDisplay = styled.span`
     border-radius: 40%;
     font-size: 14px;
     font-weight: bold;
+`
+export const SuccessMessageContainer = styled.div<SuccessMessageProps>`
+    position: absolute;
+    top: 120px;
+    width: 100%;
+    height: 30px;
+    background: rgb(0,0,0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: ${({show}) => (show ? 1 : 0)};
+    ${({ show }) => (show
+        ? css`animation: ${fadeIn} 0.6s ease-in-out;`
+        : css`animation: ${fadeOut} 0.6s ease-in-out; display: none;`)
+    }
+
+    h4 {
+        color: #fff;
+    };
+
 `
 // import styled from 'styled-components';
 // import { Link } from 'react-router-dom';
