@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 type ImageProps = {
-    imageurl: string;
+    $imageurl: string;
 };
 
 export const BackgroundImage = styled.div<ImageProps>`
@@ -9,7 +9,7 @@ export const BackgroundImage = styled.div<ImageProps>`
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-image: ${({imageurl}) => `url(${imageurl})`};
+    background-image: ${({$imageurl}) => `url(${$imageurl})`};
     border-radius: 10px;
     opacity: 0.9;
 `

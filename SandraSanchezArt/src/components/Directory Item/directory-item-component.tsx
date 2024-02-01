@@ -25,7 +25,7 @@ const DirectoryItem: FC<DirectoryItemProps> = ({category}) => {
     return (
         <DirectoryItemContainer onClick={handleRouteNavigation}>
 
-            <BackgroundImage imageurl={imageUrl} />
+            <BackgroundImage $imageurl={imageUrl} />
             <BodyContainer>
                 <h2>{categoryName}</h2>
                 <p>View More</p>

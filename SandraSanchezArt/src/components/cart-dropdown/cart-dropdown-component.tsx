@@ -1,3 +1,4 @@
+import { forwardRef, Ref } from "react";
 import { CartDropdownContainer, ListContainer, SubTotalContainer } from "./cart-dropdown-styles";
 
 import { useContext } from "react";
@@ -8,12 +9,13 @@ import CartItem from "../cart-item/cart-item-component";
 import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
 import Button from "../Button/button-component";
 
-export const CartDropdown = () => {
+//_ replaces props. The underscore means that we are aware of the `prop` parameter, but we don't need to use it
+export const CartDropdown = forwardRef<HTMLDivElement>((_, ref: Ref<HTMLDivElement>) => {
     const {cartItems, cartTotal} = useContext(ShoppingCartContext);
     console.log(cartItems);
 
     return (
-        <CartDropdownContainer>
+        <CartDropdownContainer ref={ref}>
 
             <ListContainer>
                 {cartItems.length
@@ -31,6 +33,6 @@ export const CartDropdown = () => {
             
         </CartDropdownContainer>
     );
-};
+});
 
 export default CartDropdown;

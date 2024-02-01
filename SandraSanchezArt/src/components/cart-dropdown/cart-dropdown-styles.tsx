@@ -4,7 +4,7 @@ export const CartDropdownContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 380px;
-    height: 300px;
+    height: 380px;
     position: absolute;
     top: 80px;
     right: 40px;
@@ -24,6 +24,10 @@ export const ListContainer = styled.div`
     font-family: "Architects Daughter", cursive;
     font-weight: bold;
 
+    span {
+        margin: 50px auto;
+    }
+
     // Note to self: removed these to allow full scrolling. If the contents inside this container are taller than the container itself, then setting justify-content and align items to center will indeed center them, but the browser will interpret the centered content as static and will not allow scrolling beyond the initial view
     // justify-content: center; remove to allow full scrolling
     // align-items: center; // remove to allow full scrolling
@@ -34,7 +38,7 @@ export const SubTotalContainer = styled.div`
     align-items: center;
     justify-content: center;
     height: 70px;
-    margin: 20px 0;
+    margin: 20px auto;
 
     h3 {
         font-family: "Architects Daughter", cursive;
