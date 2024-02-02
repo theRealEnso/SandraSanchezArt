@@ -29,7 +29,7 @@ const Navigation: FC = () => {
     const onShopMouseEnter = () => setIsShopDropdownOpen(true);
     const onShopMouseLeave = () => setIsShopDropdownOpen(false);
 
-    const toggleCartDropdown = (event: MouseEvent) => {
+    const toggleCartDropdown = (event: MouseEvent<HTMLElement>) => {
         // console.log(event);
         event.stopPropagation();
         setIsCartDropdownOpen(!isCartDropdownOpen);

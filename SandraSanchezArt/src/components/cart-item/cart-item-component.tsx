@@ -1,4 +1,4 @@
-import { useContext, ChangeEvent, FC} from "react";
+import { useContext, ChangeEvent, FC, MouseEvent} from "react";
 import { CartItemContainer, TitleContainer, ImageContainer } from "./cart-item.styles";
 
 import { InputContainer, QuantityInput, QuantityButton } from "../../routes/Product-details/product-details.styles";
@@ -9,7 +9,7 @@ import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 import { Product } from "../../contexts/shopping-cart-context";
 
 type CartItemProps = {
-    cartItem: Product
+    cartItem: Product;
 }
 
 const CartItem: FC<CartItemProps> = ({cartItem}) => {
@@ -19,25 +19,24 @@ const CartItem: FC<CartItemProps> = ({cartItem}) => {
 
     const addOneItem = () => {
         addOneItemToCart(cartItem, selectedSize);
-        // setAmount((quantity) => typeof quantity === "number" ? quantity + 1 : 1 );
-        // // setAmount(quantity + 1);
     };
 
-    const removeOneItem = () => {
+    const removeOneItem = (event: MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
         removeOneItemFromCart(cartItem, key);
-        // setAmount((quantity) => typeof quantity === "number" ? quantity - 1 : 1);
-        // // setAmount(quantity - 1);
     };
     
     const handleQuantityInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const itemExistsInCart = cartItems.find((cartItem) => cartItem.key === key && cartItem.id === id);
         const newAmount = event.target.value;
     
-        if (/^\d*$/.test(newAmount) && itemExistsInCart) { // .test returns a boolean
-            const updatedCartItems = cartItems.map((cartItem) => cartItem.key === key && cartItem.id === id ? { ...cartItem, quantity: newAmount === '' ? '' : parseInt(newAmount, 10) } : cartItem);
+        if (/^\d*$/.test(newAmount) && itemExistsInCart) { // returns boolean, check if inputted value is empty string or contains digits 0-9
+            const updatedCartItems = cartItems.map((cartItem) => cartItem.key === key && cartItem.id === id 
+                ? { ...cartItem, quantity: newAmount === '' ? '' : parseInt(newAmount, 10) } as Product
+                : cartItem
+            );
 
             setCartItems(updatedCartItems);
-            // setAmount(newAmount === '' ? '' : parseInt(newAmount, 10));
         }
     };
     

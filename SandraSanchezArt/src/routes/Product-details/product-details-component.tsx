@@ -56,7 +56,7 @@ const ProductDetails: FC = () => {
         const newQuantity = event.target.value; // value is of string data type
         console.log(typeof newQuantity);
 
-        //check if newQuantity is a either a empty string or if string comsists of digits 0-9. Update `quantity` as empty string if empty is received. Otherwise, update quantity as the the parsed integer value of the string
+        //check if newQuantity is a either a empty string or if string consists of digits 0-9. Update `quantity` as empty string if empty is received. Otherwise, update quantity as the the parsed integer value of the string
         if (/^\d*$/.test(newQuantity)) {
             setQuantity(newQuantity === '' ? '' : parseInt(newQuantity, 10));
         }

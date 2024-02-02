@@ -37,8 +37,8 @@ export const SubTotalContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 70px;
-    margin: 20px auto;
+    height: 20px;
+    margin: 50px auto;
 
     h3 {
         font-family: "Architects Daughter", cursive;
