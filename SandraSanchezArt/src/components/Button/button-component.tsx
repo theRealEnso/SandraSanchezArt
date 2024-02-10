@@ -17,3 +17,8 @@ const Button = ({buttonType, ...otherProps}) => {
 }
 
 export default Button;
+
+// const BUTTON_STYLE_CLASSES = {
+//     default: 'default',
+//     google: 'google',
+// };

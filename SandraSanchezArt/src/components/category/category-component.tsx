@@ -44,7 +44,7 @@ export default Category;
 //notes to self for errors:
 
 //Uncaught Error: Objects are not valid as a React child (found: object with keys {price, size}). If you meant to render a collection of children, use an array instead.
-// => this is due to the sizeAndPrices object-- `key` with the corresponding value of an array containing additional nested objects in each product object.
+// => this is due to the sizeAndPrices object-- sizesAndPrices `key` with the corresponding value of an array containing additional nested objects in each product object.
 // (reminder that arrays are actually objects under the hood in JS so don't be confused!!)
 // the entire `sizesAndPrices` object was being passed into the ProductCard component, and React complains because it can't directly render an object
 // Instead of passing the entire object, we need to map over the sizesAndPrices array and render each size and price separately.

@@ -21,7 +21,7 @@ export const Label = styled.label<LabelProps>`
   pointer-events: none;
   left: 5px;
   top: 10px;
-  transition: 700ms ease all;
+  transition: 300ms ease all;
 
   //if shrink is truthy, then apply the shrinkLabelStyles
   //destructuring shrink directly off of props

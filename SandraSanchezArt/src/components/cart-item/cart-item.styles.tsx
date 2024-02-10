@@ -9,6 +9,7 @@ export const CartItemContainer = styled.div`
 `
 
 export const ImageContainer = styled.div`
+
     img {
         width: 100px;
         height: 150px;

@@ -125,7 +125,7 @@ const ProductDetails: FC = () => {
                         <label>QUANTITY</label>
                         <InputContainer>
                             <QuantityButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={handleDecrement}>-</QuantityButton>
-                            <QuantityInput type="number" value={quantity} onChange={handleQuantityChange}></QuantityInput>
+                            <QuantityInput type="text" value={quantity} onChange={handleQuantityChange}></QuantityInput>
                             <QuantityButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={handleIncrement}>+</QuantityButton>
                         </InputContainer>
                     </QuantityContainer>
@@ -145,3 +145,9 @@ const ProductDetails: FC = () => {
 };
 
 export default ProductDetails;
+
+    //Note: this function works perfectly fine if we set type=number on the input rather than type=text
+    // const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //     const newQuantity = event.target.value;
+    //     setQuantity(parseInt(newQuantity, 10));
+    // }

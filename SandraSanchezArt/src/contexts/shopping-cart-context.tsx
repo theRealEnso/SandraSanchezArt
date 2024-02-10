@@ -17,18 +17,18 @@ const addProductAndQuantity = (cartItems: Product[], productToAdd: Product, sele
     return [...cartItems, {...productToAdd, quantity: amount, selectedSize: selectedOption, itemPrice: price, key: key }];
 };
 
-const addOneCartItem = (cartItems: Product[], productToAdd: Product, selectedOption: string) => {
-    const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === productToAdd.id && cartItem.selectedSize === selectedOption);
+const addOneCartItem = (cartItems: Product[], productToAdd: Product, selectedOption: string, key: string) => {
+    const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === productToAdd.id && cartItem.selectedSize === selectedOption && cartItem.key === key);
 
-    if(itemExistsInCart && itemExistsInCart.selectedSize === selectedOption){
+    if(itemExistsInCart){
         return cartItems.map((cartItem) => cartItem.id === productToAdd.id && cartItem.selectedSize === selectedOption ? {...cartItem, quantity: cartItem.quantity + 1} : cartItem);
     }
 
     return [...cartItems, {...productToAdd, quantity: 1}];
 };
 
-const removeOneCartItem = (cartItems: Product[], productToRemove: Product, key: string) => {
-    const itemExistsInCart = cartItems.find((cartItem) => cartItem.key === productToRemove.key);
+const removeOneCartItem = (cartItems: Product[], productToRemove: Product, selectedOption: string, key: string) => {
+    const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === productToRemove.id && cartItem.selectedSize === selectedOption && cartItem.key === productToRemove.key);
 
     if(itemExistsInCart && itemExistsInCart.quantity === 1){
         return cartItems.filter((cartItem) => cartItem.key !== key);
@@ -49,8 +49,8 @@ type CartContextProps = {
     cartItems: Product[];
     setCartItems: React.Dispatch<React.SetStateAction<Product[]>>;
     addProductAndQuantityToCart: (productToAdd: Product, selectedOption: string, price: number, amount: number, key: string) => void;
-    addOneItemToCart: (productToAdd: Product, selectedOption: string) => void;
-    removeOneItemFromCart: (productToRemove: Product, key: string) => void;
+    addOneItemToCart: (productToAdd: Product, selectedOption: string, key: string) => void;
+    removeOneItemFromCart: (productToRemove: Product, selectedOption: string, key: string) => void;
     clearItemFromCart: (productToClear: Product) => void;
     cartTotal: number;
     cartCount: number;
@@ -83,8 +83,8 @@ export const ShoppingCartProvider: FC<CartProviderProps> = ({children}) => {
     const [cartItemIsAdded, setCartItemIsAdded] = useState(false);
 
     const addProductAndQuantityToCart = (productToAdd: Product, selectedOption: string, price: number, amount: number, key: string) => setCartItems(addProductAndQuantity(cartItems, productToAdd, selectedOption, price, amount, key));
-    const addOneItemToCart = (productToAdd: Product, selectedOption: string) => setCartItems(addOneCartItem(cartItems, productToAdd, selectedOption));
-    const removeOneItemFromCart = (productToRemove: Product, key: string) => setCartItems(removeOneCartItem(cartItems, productToRemove, key));
+    const addOneItemToCart = (productToAdd: Product, selectedOption: string, key: string) => setCartItems(addOneCartItem(cartItems, productToAdd, selectedOption, key));
+    const removeOneItemFromCart = (productToRemove: Product, selectedOption: string, key: string) => setCartItems(removeOneCartItem(cartItems, productToRemove, selectedOption, key));
     const clearItemFromCart = (productToClear: Product) => setCartItems(clearCartItem(cartItems, productToClear));
 
     useEffect(() => {

@@ -34,7 +34,7 @@ const SignInForm = () => {
 
     const clearInputs = () => {
         setFormInputs({email: '', password: ''});
-    }
+    };
 
     const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();

@@ -8,9 +8,9 @@ import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
 import { Product } from "../../contexts/shopping-cart-context";
 
-type CartItemProps = {
+export type CartItemProps = {
     cartItem: Product;
-}
+};
 
 const CartItem: FC<CartItemProps> = ({cartItem}) => {
     const {name, imageUrl, selectedSize, quantity, id, key} = cartItem;
@@ -18,20 +18,20 @@ const CartItem: FC<CartItemProps> = ({cartItem}) => {
     const {addOneItemToCart, removeOneItemFromCart, cartItems, setCartItems } = useContext(ShoppingCartContext);
 
     const addOneItem = () => {
-        addOneItemToCart(cartItem, selectedSize);
+        addOneItemToCart(cartItem, selectedSize, key);
     };
 
     const removeOneItem = (event: MouseEvent<HTMLElement>) => {
         event.stopPropagation();
-        removeOneItemFromCart(cartItem, key);
+        removeOneItemFromCart(cartItem, selectedSize, key);
     };
     
     const handleQuantityInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const itemExistsInCart = cartItems.find((cartItem) => cartItem.key === key && cartItem.id === id);
+        const itemExistsInCart = cartItems.find((cartItem) => cartItem.key === key && cartItem.id === id && cartItem.selectedSize === selectedSize);
         const newAmount = event.target.value;
     
         if (/^\d*$/.test(newAmount) && itemExistsInCart) { // returns boolean, check if inputted value is empty string or contains digits 0-9
-            const updatedCartItems = cartItems.map((cartItem) => cartItem.key === key && cartItem.id === id 
+            const updatedCartItems = cartItems.map((cartItem) => cartItem.key === key && cartItem.id === id && cartItem.selectedSize === selectedSize 
                 ? { ...cartItem, quantity: newAmount === '' ? '' : parseInt(newAmount, 10) } as Product
                 : cartItem
             );
