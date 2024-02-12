@@ -93,7 +93,7 @@ const Checkout = () => {
     return (
         <CheckoutContainer>
             <FormContainer>
-                <form onSubmit={}>
+                <form>
                     <EmailContainer>
                         <label>Contact</label>
                         <CheckoutFormInput label="Email" type="email" name="email" value={email} onChange={handleInputChange} required></CheckoutFormInput>
