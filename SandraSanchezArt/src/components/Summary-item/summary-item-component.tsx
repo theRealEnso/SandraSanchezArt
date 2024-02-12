@@ -12,8 +12,6 @@ const SummaryItem: FC<CartItemProps> = ({cartItem}) => {
     const {imageUrl, itemPrice, name, quantity, selectedSize, id, key} = cartItem;
     const {cartItems, setCartItems, addOneItemToCart, removeOneItemFromCart} = useContext(ShoppingCartContext);
 
-    
-
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const newQuantity = event.target.value;
         const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === id && cartItem.selectedSize === selectedSize && cartItem.key === key);

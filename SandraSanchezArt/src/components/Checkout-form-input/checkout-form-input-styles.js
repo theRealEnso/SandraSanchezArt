@@ -1,19 +1,12 @@
-import styled, {css} from 'styled-components';
-
-const shrinkLabelStyles = css`
+import styled, { css } from 'styled-components';
+const shrinkLabelStyles = css `
   top: 2px;
   font-size: 10px;
 `;
-
-type LabelProps = {
-  $shrink?: boolean;
-};
-
-export const Group = styled.div`
+export const Group = styled.div `
   position: relative;
 `;
-
-export const Label = styled.label<LabelProps>`
+export const Label = styled.label `
     color: rgb(115, 115, 115);
     font-size: 16px;
     font-weight: normal;
@@ -27,8 +20,7 @@ export const Label = styled.label<LabelProps>`
     //destructuring shrink directly off of props
     ${({ $shrink }) => $shrink && shrinkLabelStyles};
 `;
-
-export const Input = styled.input`
+export const Input = styled.input `
   font-size: 16px;
   width: 100%;
   border-radius: 2.5px;
@@ -40,4 +32,3 @@ export const Input = styled.input`
     ${shrinkLabelStyles};
   }
 `;
-

@@ -6,6 +6,8 @@ import countries from "../../countries";
 
 import CheckoutFormInput from "../../components/Checkout-form-input/checkout-form-input-component";
 
+import PaymentForm from "../../components/payment-form/payment-form-component";
+
 const Checkout = () => {
 
     const countriesDropdownRef = useRef<HTMLDivElement | null>(null);
@@ -15,6 +17,16 @@ const Checkout = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [countriesArray, setCountriesArray] = useState<string[]>(countries);
     const [filteredCountries, setFilteredCountries] = useState<string[]>(countriesArray);
+    const [formInputs, setFormInputs] = useState({
+        email: "",
+        firstName: "",
+        lastName: "",
+        company: "",
+        address: "",
+        additionalAddress: "",
+    });
+
+    const {email, firstName, lastName, company, address, additionalAddress} = formInputs;
 
     const [optionalAddressInput, setOptionalAddressInput] = useState(false);
 
@@ -26,7 +38,15 @@ const Checkout = () => {
         event.stopPropagation();
         event.preventDefault();
         toggleIsOpen();
-    }
+    };
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = event.target;
+        setFormInputs({
+            ...formInputs,
+            [name]: value,
+        });
+    };
 
     const handleCountrySelect = (event: MouseEvent) => {
         event.stopPropagation();
@@ -67,7 +87,7 @@ const Checkout = () => {
                 <form onSubmit={handleFormSubmit}>
                     <EmailContainer>
                         <label>Contact</label>
-                        <CheckoutFormInput label="Email" type="email"required></CheckoutFormInput>
+                        <CheckoutFormInput label="Email" type="email" name="email" value={email} onChange={handleInputChange} required></CheckoutFormInput>
                     </EmailContainer>
 
                     <DeliveryContainer>
@@ -94,22 +114,24 @@ const Checkout = () => {
                         </DropdownContainer>
                         
                         <NameContainer>
-                            <CheckoutFormInput label="First Name" type="text"required></CheckoutFormInput>
-                            <CheckoutFormInput label="Last Name" type="text" required></CheckoutFormInput>
+                            <CheckoutFormInput label="First Name" type="text" name="firstName" value={firstName} onChange={handleInputChange} required></CheckoutFormInput>
+                            <CheckoutFormInput label="Last Name" type="text" name="lastName" value={lastName} onChange={handleInputChange} required></CheckoutFormInput>
                         </NameContainer>
 
                         <AddressContainer>
-                            <CheckoutFormInput label="Company (optional)" type="text" className="address-input"></CheckoutFormInput>
-                            <CheckoutFormInput label="Address" type="text" required className="address-input"></CheckoutFormInput>
+                            <CheckoutFormInput label="Company (optional)" type="text" name="company" value={company} onChange={handleInputChange} className="address-input"></CheckoutFormInput>
+                            <CheckoutFormInput label="Address" type="text" name="address" value={address} onChange={handleInputChange} className="address-input" required ></CheckoutFormInput>
 
                             <OptionalAddressInputContainer>
                                 <OptionalAddressText onClick={toggleOptionalAddressInput} className='add'>+ Add appartment, suite, etc</OptionalAddressText>
-                                <OptionalAddressInput label={optionalAddressInput ? "Apartment, suite, etc. (optional)" : ""} isDisplayed={optionalAddressInput} type="text"></OptionalAddressInput>
+                                <OptionalAddressInput label={optionalAddressInput ? "Apartment, suite, etc. (optional)" : ""} $isDisplayed={optionalAddressInput} type="text" name="additionalAddress" value={additionalAddress} onChange={handleInputChange}></OptionalAddressInput>
                             </OptionalAddressInputContainer>
 
                         </AddressContainer>
  
                     </DeliveryContainer>
+
+                    <PaymentForm></PaymentForm>
 
                 </form>
             </FormContainer>

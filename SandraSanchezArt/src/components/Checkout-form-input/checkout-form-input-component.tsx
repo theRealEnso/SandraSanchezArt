@@ -10,7 +10,7 @@ const CheckoutFormInput: FC<CheckoutInputProps> = ({label, ...otherProps}) => {
     return (
         <Group>
             <Input {...otherProps}></Input>
-            {label && <Label shrink={Boolean(otherProps.value && typeof otherProps.value === "string" && otherProps.value.length)}>{label}</Label>}
+            {label && <Label $shrink={Boolean(otherProps.value && otherProps.value && typeof otherProps.value === "string" && otherProps.value.length)}>{label}</Label>}
         </Group>
     );
 };

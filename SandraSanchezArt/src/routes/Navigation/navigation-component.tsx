@@ -93,17 +93,18 @@ const Navigation: FC = () => {
         return () => document.body.removeEventListener("click", closeShopDropdown);
     },[]);
 
-    const handleOutsideCartDropdownClick = (event: MouseEvent<HTMLElement>) => {
-        //checks if CartDropdown exists i.e if the component is mounted, and if the thing that was clicked was not contained inside the dropdown (i.e. was clicked outside of the cart dropdown). If so, this means what was clicked was outside of the CartDropdown, so setCartDropdownIsOpen to false to close it
-        //.current is used to access /point to the value of a `ref`
-        if(cartDropdownRef.current && !cartDropdownRef.current.contains(event.target as HTMLElement)){
-            setIsCartDropdownOpen(false);
-        }
-    };
-
     useEffect(() => {
-        document.body.addEventListener("click", handleOutsideCartDropdownClick)
-        return () => document.body.removeEventListener("click", handleOutsideCartDropdownClick)
+        const handleOutsideCartDropdownClick = (event: MouseEvent<HTMLElement>) => {
+            //checks if CartDropdown exists i.e if the component is mounted, and if the thing that was clicked was not contained inside the dropdown (i.e. was clicked outside of the cart dropdown). If so, this means what was clicked was outside of the CartDropdown, so setCartDropdownIsOpen to false to close it
+            //.current is used to access /point to the value of a `ref`
+            if(cartDropdownRef.current && !cartDropdownRef.current.contains(event.target as HTMLElement)){
+                setIsCartDropdownOpen(false);
+            }
+        };
+
+        document.body.addEventListener("click", handleOutsideCartDropdownClick);
+
+        return () => document.body.removeEventListener("click", handleOutsideCartDropdownClick);
     },[isCartDropdownOpen]);
 
 

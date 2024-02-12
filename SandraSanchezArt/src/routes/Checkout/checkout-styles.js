@@ -1,30 +1,18 @@
-import styled, {css} from 'styled-components';
-
+import styled from 'styled-components';
 import CheckoutFormInput from '../../components/Checkout-form-input/checkout-form-input-component';
-
-type OpenProps = {
-    open: boolean;
-};
-
-type OptionalAddressInputProps = {
-    $isDisplayed: boolean;
-};
-
-export const CheckoutContainer = styled.div`
+export const CheckoutContainer = styled.div `
     width: 80%;
     margin: auto;
-`
-
-export const FormContainer = styled.div`
+`;
+export const FormContainer = styled.div `
     width: 50%;
 
     input {
         height: 40px;
     }
 
-`
-
-export const EmailContainer = styled.div`
+`;
+export const EmailContainer = styled.div `
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -39,9 +27,8 @@ export const EmailContainer = styled.div`
     }
 
     margin-bottom: 30px;
-`
-
-export const DeliveryContainer = styled.div`
+`;
+export const DeliveryContainer = styled.div `
     display: flex;
     flex-direction: column;
 
@@ -53,9 +40,8 @@ export const DeliveryContainer = styled.div`
         font-size: 30px;
         margin-bottom: 10px;
     }
-`
-
-export const DropdownContainer  = styled.div`
+`;
+export const DropdownContainer = styled.div `
     position: relative;
 
     label {
@@ -67,9 +53,8 @@ export const DropdownContainer  = styled.div`
         color: rgb(102, 102, 102);
         cursor: pointer;
     }
-`
-
-export const DropdownButton = styled.button`
+`;
+export const DropdownButton = styled.button `
     width: 100%;
     padding: 10px;
     background-color: #fff;
@@ -79,9 +64,8 @@ export const DropdownButton = styled.button`
     height: 45px;
     padding-top: 25px;
     text-align: left;
-`
-
-export const DropdownContent = styled.div<OpenProps>`
+`;
+export const DropdownContent = styled.div `
     position: absolute;
     width: 100%;
     height: 250px;
@@ -95,35 +79,31 @@ export const DropdownContent = styled.div<OpenProps>`
     transform: translateY(-10px);
     transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
     
-    ${({open}) => open && `opacity: 1; transform: translateY(0); z-index: 1`};
+    ${({ open }) => open && `opacity: 1; transform: translateY(0); z-index: 1`};
 `;
-
-export const DropdownOption = styled.div`
+export const DropdownOption = styled.div `
   padding: 12px 16px;
   cursor: pointer;
   &:hover {
     background-color: #ddd;
   }
 `;
-
-export const SearchInputContainer = styled.div`
+export const SearchInputContainer = styled.div `
     position: sticky;
     top: 0;
     left: 0;
     width: 100%;
     background-color: rgb(209, 209, 209);
-`
-
-export const SearchInput = styled.input`
+`;
+export const SearchInput = styled.input `
 //   margin-left: auto;
   display: block;
   width: 98%
-`
-
-export const OptionsContainer = styled.div`
+`;
+export const OptionsContainer = styled.div `
   background-color: rgb(209, 209, 209);
-`
-export const NameContainer = styled.div`
+`;
+export const NameContainer = styled.div `
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -136,9 +116,8 @@ export const NameContainer = styled.div`
             margin-right: 15px;
         }
     }
-`
-
-export const AddressContainer = styled.div`
+`;
+export const AddressContainer = styled.div `
     position: relative;
     display: flex;
     flex-direction: column;
@@ -147,16 +126,15 @@ export const AddressContainer = styled.div`
     input {
         margin-bottom: 10px;
     }
-`
-export const OptionalAddressInputContainer = styled.div`
+`;
+export const OptionalAddressInputContainer = styled.div `
     // position: relative;
 
     .add {
         margin: 10px;
     }
-`
-
-export const OptionalAddressText = styled.span`
+`;
+export const OptionalAddressText = styled.span `
     color: rgb(204, 51, 51);
     font-weight: bold;
     cursor: pointer;
@@ -164,9 +142,8 @@ export const OptionalAddressText = styled.span`
     &:hover {
         color: rgb(255, 0, 0);
     }
-`
-
-export const OptionalAddressInput = styled(CheckoutFormInput)<OptionalAddressInputProps>`
+`;
+export const OptionalAddressInput = styled(CheckoutFormInput) `
     width: 100%;
     transform: translateY(-10px);
     opacity: 0;
@@ -176,9 +153,7 @@ export const OptionalAddressInput = styled(CheckoutFormInput)<OptionalAddressInp
         opacity: 0;
     }
 
-    ${({$isDisplayed}) => $isDisplayed ? `opacity: 1; transform: translateY(0);` : `opacity: 0; transform:translateY(0); pointer-events: auto`}
+    ${({ $isDisplayed }) => $isDisplayed ? `opacity: 1; transform: translateY(0);` : `opacity: 0; transform:translateY(0); pointer-events: auto`}
   
-`
-
+`;
 // ${({isDisplayed}) => isDisplayed ? `opacity: 1; transform: translateY(0);` : `opacity: 0; transform:translateY(-20px); pointer-events: auto`}
-

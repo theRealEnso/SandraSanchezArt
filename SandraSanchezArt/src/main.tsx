@@ -2,6 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
+import {Elements} from '@stripe/react-stripe-js'
+import { stripePromise } from './utilities/stripe/stripe.utilities';
+
 import App from './App';
 // import 'dotenv/config';
 
@@ -15,11 +18,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <CategoriesProvider>
-        <UserProvider>
-          <ShoppingCartProvider>
-            <App />
-          </ShoppingCartProvider>
-        </UserProvider>
+          <UserProvider>
+            <ShoppingCartProvider>
+              <Elements stripe={stripePromise}>
+                <App />
+              </Elements>
+            </ShoppingCartProvider>
+          </UserProvider>
       </CategoriesProvider>
     </BrowserRouter>
   </React.StrictMode>,
