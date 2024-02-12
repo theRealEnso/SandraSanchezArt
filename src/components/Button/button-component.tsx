@@ -22,5 +22,3 @@ export default Button;
 //     default: 'default',
 //     google: 'google',
 // };
-
-//adding comment
