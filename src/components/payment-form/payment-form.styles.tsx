@@ -21,3 +21,9 @@ export const PaymentFormContainer = styled.div`
         margin-top: 50px;
     }
 `
+
+export const FormContainer = styled.form`
+    height: 100px;
+    min-width: 500px;
+
+`

@@ -62,17 +62,6 @@ const Checkout = () => {
         setSearchQuery("");
     };
 
-    const handlePayment = async (event) => {
-        event.preventDefault();
-
-        const stripe = useStripe();
-        const elements = useElements();
-
-        if(!stripe || !elements) return;
-
-        
-    };
-
     useEffect(() => {
         const handleOutsideDropdownClick = (event: MouseEvent<HTMLElement>) => {
             if(countriesDropdownRef.current && !countriesDropdownRef.current.contains(event.target as HTMLElement)){
@@ -139,11 +128,10 @@ const Checkout = () => {
                         </AddressContainer>
  
                     </DeliveryContainer>
-
-                    <PaymentForm></PaymentForm>
-
                 </form>
             </FormContainer>
+
+            <PaymentForm></PaymentForm>
         </CheckoutContainer>
     );
 };
