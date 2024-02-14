@@ -2,8 +2,8 @@ import styled, {css} from 'styled-components';
 
 import CheckoutFormInput from '../../components/Checkout-form-input/checkout-form-input-component';
 
-type OpenProps = {
-    open: boolean;
+type IsOpenProps = {
+    isOpen: boolean;
 };
 
 type OptionalAddressInputProps = {
@@ -42,6 +42,7 @@ export const EmailContainer = styled.div`
 `
 
 export const DeliveryContainer = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
 
@@ -55,7 +56,7 @@ export const DeliveryContainer = styled.div`
     }
 `
 
-export const DropdownContainer  = styled.div`
+export const CountriesDropdownContainer = styled.div`
     position: relative;
 
     label {
@@ -69,7 +70,7 @@ export const DropdownContainer  = styled.div`
     }
 `
 
-export const DropdownButton = styled.button`
+export const CountriesDropdownButton = styled.button`
     width: 100%;
     padding: 10px;
     background-color: #fff;
@@ -81,7 +82,7 @@ export const DropdownButton = styled.button`
     text-align: left;
 `
 
-export const DropdownContent = styled.div<OpenProps>`
+export const CountriesDropdownContent = styled.div<IsOpenProps>`
     position: absolute;
     width: 100%;
     height: 250px;
@@ -95,10 +96,10 @@ export const DropdownContent = styled.div<OpenProps>`
     transform: translateY(-10px);
     transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
     
-    ${({open}) => open && `opacity: 1; transform: translateY(0); z-index: 1`};
+    ${({isOpen}) => isOpen && `opacity: 1; transform: translateY(0); z-index: 1`};
 `;
 
-export const DropdownOption = styled.div`
+export const CountriesDropdownOption = styled.div`
   padding: 12px 16px;
   cursor: pointer;
   &:hover {
@@ -120,7 +121,7 @@ export const SearchInput = styled.input`
   width: 98%
 `
 
-export const OptionsContainer = styled.div`
+export const CountriesOptionsContainer = styled.div`
   background-color: rgb(209, 209, 209);
 `
 export const NameContainer = styled.div`
@@ -148,6 +149,65 @@ export const AddressContainer = styled.div`
         margin-bottom: 10px;
     }
 `
+
+export const CityStateZipcodeContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    input {
+        width: 172px;
+    }
+`
+
+export const StatesDropdownContainer = styled.div`
+    position: relative;
+
+    label {
+        position: absolute;
+        top: 2px;
+        left: 18px;
+        cursor: pointer;
+        color: rgb(128, 128, 128);
+    }
+
+
+`
+export const StatesDropdownButton = styled.button`
+    width: 140px;
+    height: 45px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-align: left;
+    margin: 0 10px;
+    padding-top: 20px;
+    background-color: #fff;
+`
+
+export const StatesDropdownContent = styled.div<IsOpenProps>`
+    position: absolute;
+    background-color: rgb(209, 209, 209);
+    cursor: pointer;
+    left: 10px;
+    width: 140px;
+    height: 300px;
+    overflow: scroll;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+
+    ${({isOpen}) => isOpen && `opacity: 1; transform: translateY(0)`};
+`
+
+export const StatesDropdownOption = styled.div`
+    cursor: pointer;
+    padding: 12px 16px;
+    &:hover {
+        background-color: #ddd;
+    }
+`
+
 export const OptionalAddressInputContainer = styled.div`
     // position: relative;
 
