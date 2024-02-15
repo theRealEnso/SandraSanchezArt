@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef, MouseEvent, ChangeEvent } from "react";
+import { useState, useEffect, useContext, useRef, MouseEvent, ChangeEvent, FormEvent } from "react";
 
 import { UserContext } from "../../contexts/user-context";
 
@@ -10,8 +10,18 @@ import states from "../../USA-states";
 import CheckoutFormInput from "../../components/Checkout-form-input/checkout-form-input-component";
 
 import PaymentForm from "../../components/payment-form/payment-form-component";
+import UpdatedPaymentForm from "../../components/payment-form/updated-payment-form-component";
 
-import {useStripe, useElements, CardElement} from "@stripe/react-stripe-js";
+import {useStripe, useElements, CardElement, AddressElementComponent} from "@stripe/react-stripe-js";
+
+type Address = {
+    address1: string;
+    address2?: string;
+    city: string;
+    state: string;
+    zipOrPostalCode: string;
+    country: string;
+}
 
 const Checkout = () => {
 
@@ -96,17 +106,26 @@ const Checkout = () => {
     const stripe = useStripe();
     const elements = useElements();
 
-    const handlePayment = async (event) => {
+    const handlePayment = async (event: FormEvent) => {
         event.preventDefault();
 
         if(!stripe || !elements) return;
+
+        const customerInformation = {
+            name: currentUser ? currentUser.displayName : `${firstName} ${lastName}`,
+            email: currentUser ? currentUser.email : email,
+            address: additionalAddress.length ? `${streetAddress}, ${additionalAddress}` : `${streetAddress}`,
+        };
 
         const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({amount: 10000})
+            body: JSON.stringify({
+                amount: 10000,
+                customerInformation: customerInformation, 
+            })
         }).then(response => response.json());
 
         console.log(response);
@@ -117,11 +136,7 @@ const Checkout = () => {
         const paymentResult = await stripe.confirmCardPayment(client_secret, {
             payment_method: {
                 card: elements.getElement(CardElement),
-                billing_details: {
-                    name: currentUser ? currentUser.displayName : `${firstName} + ${lastName}`,
-                    email: currentUser ? currentUser.email : email,
-                    address: additionalAddress.length ? `${streetAddress} + ${additionalAddress}` : streetAddress
-                },
+                billing_details: customerInformation,
             },
         });
 
@@ -185,7 +200,7 @@ const Checkout = () => {
                                 {selectedCountry}
                             </CountriesDropdownButton>
 
-                            <CountriesDropdownContent isOpen={isCountriesSelectDropdownOpen} ref={countriesDropdownRef}>
+                            <CountriesDropdownContent $isOpen={isCountriesSelectDropdownOpen} ref={countriesDropdownRef}>
                                 <SearchInputContainer>
                                     <SearchInput type='text' placeholder='Search Countries...' value={searchQuery} onChange={handleSearchInputChange}></SearchInput>
                                 </SearchInputContainer>
@@ -208,13 +223,13 @@ const Checkout = () => {
                             <CheckoutFormInput label="Address" type="text" name="streetAddress" value={streetAddress} onChange={handleInputChange} required ></CheckoutFormInput>
 
                             <CityStateZipcodeContainer>
-                                <CheckoutFormInput label="City" name="city" value={city} required></CheckoutFormInput>
+                                <CheckoutFormInput label="City" name="city" value={city} onChange={handleInputChange} required></CheckoutFormInput>
                                         
                                 <StatesDropdownContainer>
-                                    <label onClick={handleStateButtonClick}>State</label>
+                                    <label onClick={handleStateButtonClick}>Select State</label>
                                     <StatesDropdownButton onClick={handleStateButtonClick}>{selectedState}</StatesDropdownButton>
 
-                                    <StatesDropdownContent isOpen={isStateDropdownOpen} ref={stateDropdownRef}>
+                                    <StatesDropdownContent $isOpen={isStateDropdownOpen} ref={stateDropdownRef}>
                                         {statesArray.map((state) => (
                                             <StatesDropdownOption key={state} onClick={handleStateSelect}>{state}</StatesDropdownOption>
                                         ))}
@@ -236,6 +251,8 @@ const Checkout = () => {
                     <PaymentForm></PaymentForm>
                 </form>
             </FormContainer>
+
+            <UpdatedPaymentForm></UpdatedPaymentForm>
 
         </CheckoutContainer>
     );

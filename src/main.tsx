@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import {Elements} from '@stripe/react-stripe-js'
-import { stripePromise } from './utilities/stripe/stripe.utilities';
+import { stripePromise, options } from './utilities/stripe/stripe.utilities';
 
 import App from './App';
 // import 'dotenv/config';
@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <CategoriesProvider>
           <UserProvider>
             <ShoppingCartProvider>
-              <Elements stripe={stripePromise}>
+              <Elements stripe={stripePromise} options={options}>
                 <App />
               </Elements>
             </ShoppingCartProvider>
