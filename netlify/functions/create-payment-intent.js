@@ -1,3 +1,5 @@
+//Netlify server receives requests from our front end, then runs this serverless function to communicate with stripe.
+
 import dotenv from "dotenv";
 import stripe from "stripe";
 
@@ -32,7 +34,8 @@ export const handler = async (event) => {
     };
 };
 
-// import in the dotenv library, then run config on it. Running config attaches all the secret variables inside the .env file into the process environment
+// import in the dotenv library, then run config on it... require is an old version of import. 
+//Running config attaches all the secret variables inside the .env file into the process environment
 // require("dotenv").config();
 // const stripe = require("stripe")(process.env.VITE_REACT_APP_STRIPE_SECRET_KEY);
 
