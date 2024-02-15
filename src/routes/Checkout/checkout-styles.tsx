@@ -96,7 +96,7 @@ export const CountriesDropdownContent = styled.div<IsOpenProps>`
     transform: translateY(-10px);
     transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
     
-    ${({isOpen}) => isOpen && `opacity: 1; transform: translateY(0); z-index: 1`};
+    ${({$isOpen}) => $isOpen && `opacity: 1; transform: translateY(0); z-index: 1`};
 `;
 
 export const CountriesDropdownOption = styled.div`
@@ -197,7 +197,7 @@ export const StatesDropdownContent = styled.div<IsOpenProps>`
     transform: translateY(-10px);
     transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
 
-    ${({isOpen}) => isOpen && `opacity: 1; transform: translateY(0)`};
+    ${({$isOpen}) => $isOpen && `opacity: 1; transform: translateY(0)`};
 `
 
 export const StatesDropdownOption = styled.div`
