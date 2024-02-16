@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import Button from '../Button/button-component';
 
 export const PaymentButton = styled(Button)`
-    font-size: 20px;
+    font-size: 25px;
     border-radius: 2.5px;
 `
 
 export const PaymentFormContainer = styled.div`
     display: flex;
-    height: 200px;
-    width: 100%;
     flex-direction: column;
+    height: 200px;
+    width: 50%;
     margin: 20px 0;
 
     button {
@@ -22,6 +22,24 @@ export const PaymentFormContainer = styled.div`
 `
 
 export const FormContainer = styled.form`
-    height: 100px;
-    min-width: 500px;
+
+    label {
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+`
+
+export const AddressElementContainer = styled.div`
+    margin-bottom: 40px;
+    margin-top: 20px;
+`
+
+export const PaymentElementContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    button {
+        margin-left: auto;
+    }
 `

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode, FC } from "react";
+import { createContext, useState, useEffect, ReactNode, FC } from "react";
 
 import { CategoryItem } from "../utilities/firebase-utilities";
 

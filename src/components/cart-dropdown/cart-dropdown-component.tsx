@@ -1,4 +1,4 @@
-import { forwardRef, Ref, FC } from "react";
+import { useRef, useState, forwardRef, Ref, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartDropdownContainer, ListContainer, SubTotalContainer } from "./cart-dropdown-styles";
 
@@ -11,13 +11,19 @@ import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
 import Button from "../Button/button-component";
 
 //_ replaces props. The underscore means that we are aware of the `prop` parameter, but we don't need to use it
-export const CartDropdown: FC = forwardRef<HTMLDivElement>((_, ref: Ref<HTMLDivElement>) => {
+export const CartDropdown: FC = forwardRef<HTMLDivElement>((props, ref: Ref<HTMLDivElement>) => {
+    const {close} = props;
+
+    // const viewCartSummaryBtnRef = useRef()
     const navigate = useNavigate();
 
     const {cartItems, cartTotal} = useContext(ShoppingCartContext);
     console.log(cartItems);
 
-    const handleNavigateToCartSummaryPage = () => navigate(`/cart-summary`)
+    const handleNavigateToCartSummaryPage = () => {
+        navigate(`/cart-summary`);
+        close();
+    }
 
     return (
         <CartDropdownContainer ref={ref}>

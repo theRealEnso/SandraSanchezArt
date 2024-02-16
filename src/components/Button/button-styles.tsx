@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const DefaultButton = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     color: rgb(255, 51, 153);
     background: white;

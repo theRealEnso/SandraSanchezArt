@@ -1,5 +1,6 @@
 import { DefaultButton, GoogleButton } from './button-styles';
 import { BUTTON_STYLE_CLASSES } from './button-style-classes';
+import { Spinner } from '../Spinner/spinner-styles';
 
 // function that returns an object literal with computed property names to look up the correct button based on the buttonType property that is passed
 //keys are values inside BUTTON_STYLE_CLASSES object, corresponding values are styled button components
@@ -11,9 +12,9 @@ const getButton = (buttonType = BUTTON_STYLE_CLASSES.default) => (
     }[buttonType]
 )
 
-const Button = ({buttonType, ...otherProps}) => {
+const Button = ({children, buttonType, isLoading, ...otherProps}) => {
     const CustomButton = getButton(buttonType)
-    return <CustomButton {...otherProps}></CustomButton>
+    return <CustomButton disabled={isLoading} {...otherProps}>{isLoading ? <Spinner></Spinner> : children }</CustomButton>
 }
 
 export default Button;
