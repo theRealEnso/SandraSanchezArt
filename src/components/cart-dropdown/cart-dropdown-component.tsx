@@ -37,7 +37,7 @@ export const CartDropdown: FC = forwardRef<HTMLDivElement>((props, ref: Ref<HTML
 
             <SubTotalContainer>
                 <h3>Sub-total: ${cartTotal} </h3>
-                <Button buttonType={BUTTON_STYLE_CLASSES.google} onClick={handleNavigateToCartSummaryPage}>View Cart Summary</Button>
+                <Button isLoading={false} buttonType={BUTTON_STYLE_CLASSES.google} onClick={handleNavigateToCartSummaryPage}>View Cart Summary</Button>
             </SubTotalContainer>
 
             
