@@ -34,10 +34,10 @@ const UpdatedPaymentForm = () => {
             setClientSecret(client_secret);
         })
         
-    
         console.log(response);
+        console.log(clientSecret);
         
-    },[])
+    },[]);
 
     // confirm the payment on the client
     const handlePayment = async (event: FormEvent) => {
@@ -61,7 +61,6 @@ const UpdatedPaymentForm = () => {
             }
         })
         .then((result) => {
-            setIsProcessing(false);
             if(result.error){
                 console.log(result.error);
                 alert(`There was an error: ${result.error}`)
@@ -70,6 +69,7 @@ const UpdatedPaymentForm = () => {
             console.log(result);
         })
 
+        setIsProcessing(false);
         console.log(paymentResult);
     
         // if(paymentResult.error){
@@ -80,7 +80,7 @@ const UpdatedPaymentForm = () => {
         //         console.log(paymentResult);
         //     };
         // };
-    };
+    }
 
     return (
         <PaymentFormContainer>
