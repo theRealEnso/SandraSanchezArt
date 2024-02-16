@@ -23,7 +23,7 @@ const UpdatedPaymentForm = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                amount: 10000,
+                amount: {cartTotal},
             })
         })
         .then(response => response.json())
@@ -92,11 +92,11 @@ const UpdatedPaymentForm = () => {
                         {
                             mode: 'shipping', 
                             display: {name: "split"},
-                            // defaultValues: {
-                            //     firstName: "",
-                            //     lastName: "",
-                            //     phone: "",
-                            // }, 
+                            defaultValues: {
+                                firstName: "ex: John",
+                                lastName: "ex: Doe",
+                                phone: "555-555-5555",
+                            }, 
 
                             // address: {
                             //     line1: "",

@@ -29,7 +29,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             <ProductTitle>{name}</ProductTitle>
 
             <ButtonContainer>
-                <Button buttonType={BUTTON_STYLE_CLASSES.default} onClick={navigateToProductDetails}>View Details</Button>
+                <Button isLoading={false} buttonType={BUTTON_STYLE_CLASSES.default} onClick={navigateToProductDetails}>View Details</Button>
             </ButtonContainer>
 
         </ProductCardContainer>

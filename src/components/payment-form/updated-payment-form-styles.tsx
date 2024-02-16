@@ -12,7 +12,8 @@ export const PaymentFormContainer = styled.div`
     flex-direction: column;
     height: 200px;
     width: 50%;
-    margin: 20px 0;
+    height: 100%;
+    margin: 20px 20px;
 
     button {
         width: 50%;
