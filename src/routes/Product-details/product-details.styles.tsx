@@ -45,6 +45,10 @@ export const DetailsContainer = styled.div`
         border-bottom: 1px solid grey;
         padding: 10px;
     }
+
+    #go-back {
+        width: 40%;
+    }
 `
 
 export const SelectionContainer = styled.div`
@@ -141,4 +145,11 @@ export const DescriptionContainer = styled.div`
     font-family: "Architects Daughter", cursive;
     font-weight: bold;
     font-size: 18px;
+`
+
+export const GoBackButton = styled(Button)`
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    margin-left: auto;
 `

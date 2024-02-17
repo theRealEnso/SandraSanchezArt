@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { InputContainer } from '../../routes/Product-details/product-details.styles';
 
+import DeleteForever from '@mui/icons-material/DeleteForever';
+
 export const SummaryItemContainer = styled.div`
     display: flex;
     justify-content: space-between;
@@ -42,5 +44,18 @@ export const ItemPriceContainer = styled.div`
 `
 export const SummaryInputContainer = styled(InputContainer)`
     width: 10%;
+    margin: 0 20px;
+`
+
+export const IconContainer = styled.div`
+    margin: 0 10px;
+`
+
+export const RemoveIcon = styled(DeleteForever)`
+    cursor: pointer;
+    
+    &:hover {
+        color: red;
+    }
 `
 

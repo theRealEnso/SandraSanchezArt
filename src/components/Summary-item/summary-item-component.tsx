@@ -1,5 +1,5 @@
 import { useContext, FC, ChangeEvent } from "react";
-import { SummaryItemContainer, ImageContainer, ProductNameContainer, SummaryInputContainer, ItemPriceContainer } from "./summary-item-styles";
+import { SummaryItemContainer, ImageContainer, ProductNameContainer, SummaryInputContainer, ItemPriceContainer, IconContainer, RemoveIcon } from "./summary-item-styles";
 import { QuantityButton, QuantityInput} from "../../routes/Product-details/product-details.styles";
 import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
 
@@ -10,7 +10,7 @@ import { Product } from "../../contexts/shopping-cart-context";
 
 const SummaryItem: FC<CartItemProps> = ({cartItem}) => {
     const {imageUrl, itemPrice, name, quantity, selectedSize, id, key} = cartItem;
-    const {cartItems, setCartItems, addOneItemToCart, removeOneItemFromCart} = useContext(ShoppingCartContext);
+    const {cartItems, setCartItems, addOneItemToCart, removeOneItemFromCart, clearItemFromCart} = useContext(ShoppingCartContext);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const newQuantity = event.target.value;
@@ -29,6 +29,8 @@ const SummaryItem: FC<CartItemProps> = ({cartItem}) => {
     const handleDecrement = () => removeOneItemFromCart(cartItem,selectedSize, key);
     
     const handleIncrement = () => addOneItemToCart(cartItem, selectedSize, key);
+
+    const deleteItemFromCart = () => clearItemFromCart(cartItem, key);
 
 
     return (
@@ -53,8 +55,9 @@ const SummaryItem: FC<CartItemProps> = ({cartItem}) => {
                 <span>$ {quantity * itemPrice}</span>
             </ItemPriceContainer>
             
-
-            
+            <IconContainer onClick={deleteItemFromCart}>
+                <RemoveIcon fontSize="large"></RemoveIcon>
+            </IconContainer>
             
         </SummaryItemContainer>
     );
