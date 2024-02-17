@@ -32,6 +32,7 @@ exports.handler = async (event) => {
         case 'payment_intent.succeeded':
           const paymentIntent = event.data.object;
           console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+          console.log(paymentIntent);
           // Then define and call a method to handle the successful payment intent.
           // handlePaymentIntentSucceeded(paymentIntent);
           break;
@@ -39,6 +40,7 @@ exports.handler = async (event) => {
           const paymentMethod = event.data.object;
           // Then define and call a method to handle the successful attachment of a PaymentMethod.
           // handlePaymentMethodAttached(paymentMethod);
+          console.log(paymentMethod)
           break;
         default:
           // Unexpected event type

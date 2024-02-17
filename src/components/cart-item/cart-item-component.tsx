@@ -3,6 +3,7 @@ import { CartItemContainer, TitleContainer, ImageContainer } from "./cart-item.s
 
 import { InputContainer, QuantityInput, QuantityButton } from "../../routes/Product-details/product-details.styles";
 import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
@@ -15,7 +16,7 @@ export type CartItemProps = {
 const CartItem: FC<CartItemProps> = ({cartItem}) => {
     const {name, imageUrl, selectedSize, quantity, id, key} = cartItem;
 
-    const {addOneItemToCart, removeOneItemFromCart, cartItems, setCartItems } = useContext(ShoppingCartContext);
+    const {addOneItemToCart, removeOneItemFromCart, clearItemFromCart, cartItems, setCartItems } = useContext(ShoppingCartContext);
 
     const addOneItem = () => {
         addOneItemToCart(cartItem, selectedSize, key);
@@ -60,6 +61,8 @@ const CartItem: FC<CartItemProps> = ({cartItem}) => {
                 <QuantityInput value={quantity} onChange={handleQuantityInputChange}></QuantityInput>
                 <QuantityButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={addOneItem}>+</QuantityButton>
             </InputContainer>
+
+            <DeleteForeverIcon onClick={clearItemFromCart}></DeleteForeverIcon>
             
         </CartItemContainer>
     );

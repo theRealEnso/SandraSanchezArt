@@ -13,6 +13,7 @@ const UpdatedPaymentForm = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
+    const total = cartTotal * 100;
     
     //create payment intent with cartTotal amount to Netlify server
     //send this request to Netlify serverless function
@@ -23,7 +24,7 @@ const UpdatedPaymentForm = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                amount: {cartTotal},
+                amount: total,
             })
         })
         .then(response => response.json())
