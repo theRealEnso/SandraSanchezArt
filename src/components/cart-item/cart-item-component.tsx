@@ -1,9 +1,8 @@
 import { useContext, ChangeEvent, FC, MouseEvent} from "react";
-import { CartItemContainer, TitleContainer, ImageContainer } from "./cart-item.styles";
+import { CartItemContainer, TitleContainer, ImageContainer, IconContainer, RemoveIcon } from "./cart-item.styles";
 
 import { InputContainer, QuantityInput, QuantityButton } from "../../routes/Product-details/product-details.styles";
 import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
@@ -62,7 +61,9 @@ const CartItem: FC<CartItemProps> = ({cartItem}) => {
                 <QuantityButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={addOneItem}>+</QuantityButton>
             </InputContainer>
 
-            <DeleteForeverIcon onClick={clearItemFromCart}></DeleteForeverIcon>
+           <IconContainer>
+                <RemoveIcon fontSize="large" onClick={clearItemFromCart}></RemoveIcon>
+           </IconContainer>
             
         </CartItemContainer>
     );

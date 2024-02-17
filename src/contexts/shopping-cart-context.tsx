@@ -38,7 +38,11 @@ const removeOneCartItem = (cartItems: Product[], productToRemove: Product, selec
 };
 
 const clearCartItem = (cartItems: Product[], productToClear: Product) => {
-    return cartItems.filter((cartItem) => cartItem.id !== productToClear.id);
+    const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === productToClear.id && cartItem.key === productToClear.key);
+
+    if(itemExistsInCart){
+        return cartItems.filter((cartItem) => cartItem.id !== productToClear.id && cartItem.key !== productToClear.key);
+    }
 };
 
 type CartProviderProps = {
