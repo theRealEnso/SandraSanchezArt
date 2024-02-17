@@ -42,3 +42,8 @@ export const ReturnHomeButton = styled(Button)`
     border-radius: 2px;
     font-size: 26px;
 `
+
+export const GoBackButton = styled(Button)`
+    border-radius: 2px;
+    font-size: 26px;
+`

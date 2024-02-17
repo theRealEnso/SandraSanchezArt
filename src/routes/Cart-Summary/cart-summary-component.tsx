@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { SummaryContainer, CheckoutContainer, ShoppingCartContainer, ButtonContainer, CheckoutButton, ReturnHomeButton } from "./cart-summary-styles";
+import { SummaryContainer, CheckoutContainer, ShoppingCartContainer, ButtonContainer, CheckoutButton, ReturnHomeButton, GoBackButton } from "./cart-summary-styles";
 
 import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
@@ -15,6 +15,7 @@ const CartSummary = () => {
 
     const navigateToHome = () => navigate(`/`);
     const navigateToCheckout = () => navigate(`/checkout`);
+    const goBack = () => navigate(-1);
 
     return (
         <SummaryContainer>
@@ -30,6 +31,7 @@ const CartSummary = () => {
 
             <ButtonContainer>
                 <ReturnHomeButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={navigateToHome}>Return to Home</ReturnHomeButton>
+                <GoBackButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={goBack}>Go Back</GoBackButton>
                 <CheckoutButton buttonType={BUTTON_STYLE_CLASSES.google} onClick={navigateToCheckout}>Checkout</CheckoutButton>
             </ButtonContainer>
 

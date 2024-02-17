@@ -37,12 +37,8 @@ const removeOneCartItem = (cartItems: Product[], productToRemove: Product, selec
     return cartItems.map((cartItem) => cartItem.key === key ? {...cartItem, quantity: cartItem.quantity - 1} : cartItem);
 };
 
-const clearCartItem = (cartItems: Product[], productToClear: Product) => {
-    const itemExistsInCart = cartItems.find((cartItem) => cartItem.id === productToClear.id && cartItem.key === productToClear.key);
-
-    if(itemExistsInCart){
-        return cartItems.filter((cartItem) => cartItem.id !== productToClear.id && cartItem.key !== productToClear.key);
-    }
+const clearCartItem = (cartItems: Product[], productToClear: Product, key: string) => {
+    return cartItems.filter((cartItem) => cartItem.id !== productToClear.id && cartItem.key !== productToClear.key);
 };
 
 type CartProviderProps = {
@@ -55,7 +51,7 @@ type CartContextProps = {
     addProductAndQuantityToCart: (productToAdd: Product, selectedOption: string, price: number, amount: number, key: string) => void;
     addOneItemToCart: (productToAdd: Product, selectedOption: string, key: string) => void;
     removeOneItemFromCart: (productToRemove: Product, selectedOption: string, key: string) => void;
-    clearItemFromCart: (productToClear: Product) => void;
+    clearItemFromCart: (productToClear: Product, key: string) => void;
     cartTotal: number;
     cartCount: number;
     cartItemIsAdded: boolean;
@@ -89,7 +85,7 @@ export const ShoppingCartProvider: FC<CartProviderProps> = ({children}) => {
     const addProductAndQuantityToCart = (productToAdd: Product, selectedOption: string, price: number, amount: number, key: string) => setCartItems(addProductAndQuantity(cartItems, productToAdd, selectedOption, price, amount, key));
     const addOneItemToCart = (productToAdd: Product, selectedOption: string, key: string) => setCartItems(addOneCartItem(cartItems, productToAdd, selectedOption, key));
     const removeOneItemFromCart = (productToRemove: Product, selectedOption: string, key: string) => setCartItems(removeOneCartItem(cartItems, productToRemove, selectedOption, key));
-    const clearItemFromCart = (productToClear: Product) => setCartItems(clearCartItem(cartItems, productToClear));
+    const clearItemFromCart = (productToClear: Product, key: string) => setCartItems(clearCartItem(cartItems, productToClear, key));
 
     useEffect(() => {
         const newCartCount = cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.quantity, 0);

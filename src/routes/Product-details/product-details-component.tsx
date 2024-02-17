@@ -1,11 +1,10 @@
 import {useState, useContext, useEffect, FC, ChangeEvent} from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 import {v4 as uuidv4} from 'uuid';
 
-import { ProductDetailsContainer, ImageContainer, DetailsContainer, SelectionContainer, OptionsContainer, QuantityContainer, InputContainer, QuantityInput, QuantityButton, AddToCartButton, DescriptionContainer } from './product-details.styles';
+import { ProductDetailsContainer, ImageContainer, DetailsContainer, SelectionContainer, OptionsContainer, QuantityContainer, InputContainer, QuantityInput, QuantityButton, AddToCartButton, DescriptionContainer, GoBackButton } from './product-details.styles';
 
-// import Button from '../../components/Button/button-component';
 import { BUTTON_STYLE_CLASSES } from '../../components/Button/button-style-classes';
 
 import { ShoppingCartContext } from '../../contexts/shopping-cart-context';
@@ -18,6 +17,7 @@ type SizeAndPriceProps = {
 
 const ProductDetails: FC = () => {
     const {addProductAndQuantityToCart, setCartItemIsAdded} = useContext(ShoppingCartContext);
+    const navigate = useNavigate();
 
     const location = useLocation();
     const {product} = location.state;
@@ -99,6 +99,8 @@ const ProductDetails: FC = () => {
         return <h1>Whoops, looks like there was an error loading the page!</h1>
     }
 
+    const goBack = () => navigate(-1);
+
     return (
         <ProductDetailsContainer>
             <ImageContainer>
@@ -134,12 +136,10 @@ const ProductDetails: FC = () => {
                 </SelectionContainer>
 
                 <DescriptionContainer>{parsedDescription}</DescriptionContainer>
-
+                
+                <GoBackButton isLoading={false} buttonType={BUTTON_STYLE_CLASSES.default} onClick={goBack} id="go-back">Go Back</GoBackButton>
 
             </DetailsContainer>
-
-
-
         </ProductDetailsContainer>
     );
 };

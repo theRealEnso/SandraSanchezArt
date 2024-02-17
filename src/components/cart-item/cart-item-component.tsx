@@ -25,6 +25,8 @@ const CartItem: FC<CartItemProps> = ({cartItem}) => {
         event.stopPropagation();
         removeOneItemFromCart(cartItem, selectedSize, key);
     };
+
+    const deleteItemFromCart = () => clearItemFromCart(cartItem, key);
     
     const handleQuantityInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const itemExistsInCart = cartItems.find((cartItem) => cartItem.key === key && cartItem.id === id && cartItem.selectedSize === selectedSize);
@@ -61,10 +63,10 @@ const CartItem: FC<CartItemProps> = ({cartItem}) => {
                 <QuantityButton buttonType={BUTTON_STYLE_CLASSES.default} onClick={addOneItem}>+</QuantityButton>
             </InputContainer>
 
-           <IconContainer>
-                <RemoveIcon fontSize="large" onClick={clearItemFromCart}></RemoveIcon>
+           <IconContainer onClick={deleteItemFromCart}>
+                <RemoveIcon fontSize="large"></RemoveIcon>
            </IconContainer>
-            
+
         </CartItemContainer>
     );
 };
