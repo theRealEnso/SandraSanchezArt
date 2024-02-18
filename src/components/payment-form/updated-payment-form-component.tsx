@@ -1,7 +1,8 @@
-import { useEffect, useState, useContext, FormEvent } from "react";
+import { useEffect, useState, useContext, FormEvent, ChangeEvent } from "react";
 import { useStripe, useElements, PaymentElement, AddressElement} from "@stripe/react-stripe-js";
 
-import { PaymentFormContainer, FormContainer, AddressElementContainer, PaymentElementContainer, PaymentButton } from "./updated-payment-form-styles";
+import { PaymentFormContainer, FormContainer, AddressElementContainer, PaymentElementContainer, PaymentButton, EmailContainer } from "./updated-payment-form-styles";
+import { UpdatedCheckoutInput } from "./updated-payment-form-styles";
 import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
 
 import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
@@ -11,6 +12,7 @@ const UpdatedPaymentForm = () => {
 
     const [clientSecret, setClientSecret] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
+    const [emailInput, setEmailInput] = useState("");
     const stripe = useStripe();
     const elements = useElements();
     const total = cartTotal * 100;
@@ -51,41 +53,73 @@ const UpdatedPaymentForm = () => {
         const {error: submitError} = await elements.submit();
         if(submitError){
             console.log(submitError);
+            setIsProcessing(false);
             return;
         }
-        
-        const paymentResult = await stripe.confirmPayment({
-            elements,
-            clientSecret,
-            confirmParams: {
-                return_url: "https://sandra-sanchez-art.netlify.app",
-            }
-        })
-        .then((result) => {
-            if(result.error){
-                console.log(result.error);
-                alert(`There was an error: ${result.error}`)
+
+        try {
+            const paymentResult = await stripe.confirmPayment({
+                elements,
+                clientSecret,
+                confirmParams: {
+                    return_url: "https://sandra-sanchez-art.netlify.app",
+                    payment_method_data: {
+                        billing_details: {
+                            email: emailInput,
+                        }
+                    }
+                }
+            });
+
+            if(paymentResult.error){
+                console.log(paymentResult.error);
+                alert(`There was an error submitting payment: ${paymentResult.error}`);
+                setIsProcessing(false);
+                return;
             }
 
-            console.log(result);
-        })
+            const response = await fetch('/.netlify/functions/send-email', {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    subject: 'Payment and Order Confirmation',
+                    recipient: emailInput,
+                    message: 'Your payment was successful!'
+                })
+            });
 
-        setIsProcessing(false);
-        console.log(paymentResult);
-    
-        // if(paymentResult.error){
-        //     alert(paymentResult.error)
-        // } else {
-        //     if(paymentResult) {
-        //         alert("Payment Successful!");
-        //         console.log(paymentResult);
-        //     };
-        // };
+            if(!response.ok) {
+                console.error(`Faled to send email!`);
+                setIsProcessing(false);
+                return;
+            }
+
+            console.log(`Successfully sent email!`);
+
+        } catch (error) {
+            console.error('Error processing payment or sending email:', error);
+            setIsProcessing(false);
+        }
     }
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const newInputValue = event.target.value;
+        setEmailInput(newInputValue);
+
+        console.log(emailInput);
+    };
 
     return (
         <PaymentFormContainer>
             <FormContainer onSubmit={handlePayment}>
+                <EmailContainer>
+                    <label id="contact-label">Contact</label>
+                    <UpdatedCheckoutInput type="email" name="email" value={emailInput} onChange={handleInputChange} required></UpdatedCheckoutInput>
+                </EmailContainer>
+
+
                 <label>Delivery</label>
 
                 <AddressElementContainer>
@@ -132,4 +166,41 @@ const UpdatedPaymentForm = () => {
 }
 
 export default UpdatedPaymentForm;
+
+// const paymentResult = await stripe.confirmPayment({
+//     elements,
+//     clientSecret,
+//     confirmParams: {
+//         return_url: "https://sandra-sanchez-art.netlify.app",
+//     }
+// })
+// .then((result) => {
+//     if(result.error){
+//         console.log(result.error);
+//         alert(`There was an error: ${result.error}`)
+//     }
+
+//     console.log(result);
+// }).then(() => {
+//     fetch('/.netlify/functions/send-email', {
+//         method: "POST",
+//         headers: {
+//             'Content-type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             subject: 'Payment and Order Confirmation',
+//             recipient: {emailInput},
+//             message: `Your payment was successful! `
+//         })
+//     }).then((result) => {
+//         if(!result.ok){
+//             console.error('Failed to send email!');
+//         } else {
+//             console.log(`Successfully sent email!`)
+//         }
+//     })
+// })
+
+// setIsProcessing(false);
+// console.log(paymentResult);
 
