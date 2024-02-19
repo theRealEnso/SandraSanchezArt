@@ -1,6 +1,9 @@
 import aws from 'aws-sdk';
 
-const ses = new aws.SES({ region: 'us-east-1' });
+const ses = new aws.SES({ 
+    region: process.env.AWS_REGION,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY 
+});
 
 export const handler = async (event) => {
     const { subject, recipient, message } = JSON.parse(event.body);
