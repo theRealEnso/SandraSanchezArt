@@ -5,7 +5,7 @@ import stripe from "stripe";
 
 dotenv.config();
 
-const stripeInstance = stripe(process.env.REACT_APP_STRIPE_SECRET_KEY);
+const stripeInstance = stripe(process.env.VITE_REACT_APP_STRIPE_SECRET_KEY);
 
 export const handler = async (event) => {
     //create payment intent on Stripe
