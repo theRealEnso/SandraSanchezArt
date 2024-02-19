@@ -5,9 +5,10 @@ import stripe from "stripe";
 
 dotenv.config();
 
-const stripeInstance = stripe(process.env.VITE_REACT_APP_STRIPE_SECRET_KEY);
+const stripeInstance = stripe(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 export const handler = async (event) => {
+    //create payment intent on Stripe
     try {
         const {amount} = JSON.parse(event.body);
 
@@ -18,12 +19,14 @@ export const handler = async (event) => {
                 enabled: true,
             },
         });
-
+        
+        // send payment intent back to the front end if successful
         return {
             statusCode: 200,
             body: JSON.stringify({paymentIntent})
         };
 
+        // send error code back to front end if there is an error
     } catch (error) {
         console.log(error);
 
