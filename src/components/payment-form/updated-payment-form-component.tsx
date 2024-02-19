@@ -116,7 +116,7 @@ const UpdatedPaymentForm = () => {
             <FormContainer onSubmit={handlePayment}>
                 <EmailContainer>
                     <label id="contact-label">Contact</label>
-                    <UpdatedCheckoutInput type="email" name="email" value={emailInput} onChange={handleInputChange} required></UpdatedCheckoutInput>
+                    <UpdatedCheckoutInput type="email" name="email" value={emailInput} placeholder="Email" onChange={handleInputChange} required></UpdatedCheckoutInput>
                 </EmailContainer>
 
 
