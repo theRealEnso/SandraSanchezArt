@@ -6,7 +6,6 @@ import {Elements} from '@stripe/react-stripe-js'
 import { stripePromise, options } from './utilities/stripe/stripe.utilities';
 
 import App from './App';
-// import 'dotenv/config';
 
 import { UserProvider } from './contexts/user-context';
 import { CategoriesProvider } from './contexts/categories-context';
