@@ -1,9 +1,9 @@
 import aws from 'aws-sdk';
 
 const ses = new aws.SES({ 
-    region: process.env.AWS_REGION,
-    accessKeyId: process.env.AWS_SECRET_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.VITE_REACT_APP_AWS_REGION,
+    accessKeyId: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY_ID,
+    secretAccessKey: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY,
 });
 
 export const handler = async (event) => {
