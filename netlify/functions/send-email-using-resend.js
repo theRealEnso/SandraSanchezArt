@@ -30,7 +30,7 @@ export const handler = async(event) => {
                 body: data,
             }
         }
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         return {
             body: JSON.stringify({error: `Failed to send email`})
