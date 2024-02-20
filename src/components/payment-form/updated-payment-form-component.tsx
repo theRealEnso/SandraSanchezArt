@@ -7,6 +7,8 @@ import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
 
 import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
+import ConfirmationEmail from "../Confirmation-email/confirmation-email-component";
+
 const UpdatedPaymentForm = () => {
     const {cartTotal} = useContext(ShoppingCartContext)
 
@@ -78,15 +80,16 @@ const UpdatedPaymentForm = () => {
                 return;
             }
 
-            const response = await fetch('/.netlify/functions/send-email', {
+            const response = await fetch('/.netlify/functions/send-email-with-resend', {
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json',
                 },
                 body: JSON.stringify({
-                    subject: 'Payment and Order Confirmation',
-                    recipient: emailInput,
-                    message: 'Your payment was successful!'
+                    from: "sandrasanchezart.space",
+                    to: emailInput,
+                    subject: 'Payment and Order Confirmation for Sandra Sanchez Art',
+                    react: ConfirmationEmail()
                 })
             });
 
