@@ -16,10 +16,6 @@ import {
 
   import * as React from "react";
   
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "";
-  
   export const ConfirmationEmail = () => (
     <Html>
       <Head />
@@ -39,13 +35,6 @@ import {
           </Section>
           <Hr style={global.hr} />
           <Section style={message}>
-            <Img
-              src={`${baseUrl}/static/nike-logo.png`}
-              width="66"
-              height="22"
-              alt="Nike"
-              style={{ margin: "auto" }}
-            />
             <Heading style={global.heading}>It's On Its Way.</Heading>
             <Text style={global.text}>
               You order's is on its way. Use the link above to track its progress.
@@ -70,10 +59,6 @@ import {
             <Row>
               <Column>
                 <Img
-                  src={`${baseUrl}/static/nike-product.png`}
-                  alt="Brazil 2022/23 Stadium Away Women's Nike Dri-FIT Soccer Jersey"
-                  style={{ float: "left" }}
-                  width="260px"
                 />
               </Column>
               <Column style={{ verticalAlign: "top", paddingLeft: "12px" }}>
@@ -113,9 +98,6 @@ import {
                 align="center"
               >
                 <Img
-                  src={`${baseUrl}/static/nike-recomendation-1.png`}
-                  alt="Brazil 2022/23 Stadium Away Women's Nike Dri-FIT Soccer Jersey"
-                  width="100%"
                 />
                 <Text style={recomendations.title}>
                   USWNT 2022/23 Stadium Home
@@ -126,9 +108,6 @@ import {
               </Column>
               <Column style={recomendations.product} align="center">
                 <Img
-                  src={`${baseUrl}/static/nike-recomendation-2.png`}
-                  alt="Brazil 2022/23 Stadium Away Women's Nike Dri-FIT Soccer Jersey"
-                  width="100%"
                 />
                 <Text style={recomendations.title}>
                   Brazil 2022/23 Stadium Goalkeeper
@@ -139,9 +118,6 @@ import {
               </Column>
               <Column style={recomendations.product} align="center">
                 <Img
-                  src={`${baseUrl}/static/nike-recomendation-4.png`}
-                  alt="Brazil 2022/23 Stadium Away Women's Nike Dri-FIT Soccer Jersey"
-                  width="100%"
                 />
                 <Text style={recomendations.title}>FFF</Text>
                 <Text style={recomendations.text}>Women's Soccer Jacket</Text>
@@ -151,9 +127,6 @@ import {
                 align="center"
               >
                 <Img
-                  src={`${baseUrl}/static/nike-recomendation-4.png`}
-                  alt="Brazil 2022/23 Stadium Away Women's Nike Dri-FIT Soccer Jersey"
-                  width="100%"
                 />
                 <Text style={recomendations.title}>FFF</Text>
                 <Text style={recomendations.text}>
@@ -202,10 +175,6 @@ import {
                 <Row>
                   <Column style={{ width: "16px" }}>
                     <Img
-                      src={`${baseUrl}/static/nike-phone.png`}
-                      width="16px"
-                      height="26px"
-                      style={{ paddingRight: "14px" }}
                     />
                   </Column>
                   <Column>
