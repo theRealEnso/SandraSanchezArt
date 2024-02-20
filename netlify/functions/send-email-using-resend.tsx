@@ -25,7 +25,10 @@ export const handler = async(event) => {
 
         if(response.ok){
             const data = await response.json();
-            console.log(data);
+            return {
+                statusCode: 200,
+                body: data,
+            }
         }
     } catch(error) {
         console.log(error);
