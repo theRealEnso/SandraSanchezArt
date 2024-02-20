@@ -20,7 +20,7 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": false,
   },
-  "include": ["src"],
+  "include": ["src", "netlify/functions/send-email-using-resend.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
 
