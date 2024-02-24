@@ -2,6 +2,8 @@
 
 // const resend = new Resend(process.env.VITE_REACT_APP_RESEND_API_KEY);
 
+import ConfirmationEmail from '../../src/emails/confirmation-email-component'
+
 
 const RESEND_API_KEY = process.env.VITE_REACT_APP_RESEND_API_KEY;
 

@@ -16,34 +16,27 @@ import {
 
   import * as React from "react";
   
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "";
+//   const baseUrl = process.env.VERCEL_URL
+//     ? `https://${process.env.VERCEL_URL}`
+//     : "";
   
+    let baseUrl = "";
+        if (typeof process !== "undefined" && process.env.VERCEL_URL) {
+        baseUrl = `https://${process.env.VERCEL_URL}`;
+    }
+    
   export const ConfirmationEmail = () => (
     <Html>
       <Head />
-      <Preview>Get your order summary, estimated delivery date and more</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Section style={track.container}>
-            <Row>
-              <Column>
-                <Text style={global.paragraphWithBold}>Tracking Number</Text>
-                <Text style={track.number}>1ZV218970300071628</Text>
-              </Column>
-              <Column align="right">
-                <Link style={global.button}>Track Package</Link>
-              </Column>
-            </Row>
-          </Section>
           <Hr style={global.hr} />
           <Section style={message}>
             <Img
               src={`${baseUrl}/static/nike-logo.png`}
               width="66"
               height="22"
-              alt="Nike"
+              alt="SandraSanchezArt"
               style={{ margin: "auto" }}
             />
             <Heading style={global.heading}>It's On Its Way.</Heading>
@@ -52,8 +45,7 @@ import {
             </Text>
             <Text style={{ ...global.text, marginTop: 24 }}>
               We´ve also charged your payment method for the cost of your order
-              and will be removing any authorization holds. For payment details,
-              please visit your Orders page on Nike.com or in the Nike app.
+              and will be removing any authorization holds.
             </Text>
           </Section>
           <Hr style={global.hr} />

@@ -1,16 +1,28 @@
 import { useEffect, useState, useContext, FormEvent, ChangeEvent } from "react";
 import { useStripe, useElements, PaymentElement, AddressElement} from "@stripe/react-stripe-js";
 
+import {render} from '@react-email/render';
+import {SES} from '@aws-sdk/client-ses';
+
 import { PaymentFormContainer, FormContainer, AddressElementContainer, PaymentElementContainer, PaymentButton, EmailContainer } from "./updated-payment-form-styles";
 import { UpdatedCheckoutInput } from "./updated-payment-form-styles";
 import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
 
 import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
-import ConfirmationEmail from "../Confirmation-email/confirmation-email-component";
+import ConfirmationEmail from "../../emails/confirmation-email-component";
 
 const UpdatedPaymentForm = () => {
-    const {cartTotal} = useContext(ShoppingCartContext)
+
+    const ses = new SES({ 
+        region: process.env.VITE_REACT_APP_AWS_REGION,
+        credentials: {
+            accessKeyId: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY_ID,
+            secretAccessKey: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY,
+        }
+    });
+
+    const {cartTotal} = useContext(ShoppingCartContext);
 
     const [clientSecret, setClientSecret] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
@@ -81,27 +93,30 @@ const UpdatedPaymentForm = () => {
                 return;
             }
 
-            const response = await fetch('/.netlify/functions/send-email-with-resend', {
-                method: "POST",
-                headers: {
-                    'Content-type': 'application/json',
+            console.log(paymentResult);
+
+            const emailHtml = render(<ConfirmationEmail/>);
+            const params = {
+            Source: 'email@sandrasanchezart.space',
+            Destination: {
+                ToAddresses: [`${emailInput}`],
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Charset: 'UTF-8',
+                        Data: emailHtml,
+                    },
                 },
-                body: JSON.stringify({
-                    from: "sandrasanchezart.space",
-                    to: emailInput,
-                    subject: 'Payment and Order Confirmation for Sandra Sanchez Art',
-                    react: ConfirmationEmail()
-                })
-            });
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: 'Payment Confirmation',
+                },
+            },
+        };
 
-            if(!response.ok) {
-                console.error(`Faled to send email!`);
-                setIsProcessing(false);
-                return;
-            }
-
-            console.log(`Successfully sent email!`);
-
+        await ses.sendEmail(params);
+            
         } catch (error) {
             console.error('Error processing payment or sending email:', error);
             setIsProcessing(false);
@@ -171,40 +186,131 @@ const UpdatedPaymentForm = () => {
 
 export default UpdatedPaymentForm;
 
-// const paymentResult = await stripe.confirmPayment({
-//     elements,
-//     clientSecret,
-//     confirmParams: {
-//         return_url: "https://sandra-sanchez-art.netlify.app",
-//     }
-// })
-// .then((result) => {
-//     if(result.error){
-//         console.log(result.error);
-//         alert(`There was an error: ${result.error}`)
-//     }
+// import { useEffect, useState, useContext, FormEvent, ChangeEvent } from "react";
+// import { useStripe, useElements, PaymentElement, AddressElement} from "@stripe/react-stripe-js";
 
-//     console.log(result);
-// }).then(() => {
-//     fetch('/.netlify/functions/send-email', {
-//         method: "POST",
-//         headers: {
-//             'Content-type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             subject: 'Payment and Order Confirmation',
-//             recipient: {emailInput},
-//             message: `Your payment was successful! `
-//         })
-//     }).then((result) => {
-//         if(!result.ok){
-//             console.error('Failed to send email!');
-//         } else {
-//             console.log(`Successfully sent email!`)
+// import {render} from '@react-email/render';
+// import {SES} from '@aws-sdk/client-ses';
+
+// import { PaymentFormContainer, FormContainer, AddressElementContainer, PaymentElementContainer, PaymentButton, EmailContainer } from "./updated-payment-form-styles";
+// import { UpdatedCheckoutInput } from "./updated-payment-form-styles";
+// import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
+
+// import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
+
+// import ConfirmationEmail from '../../emails/confirmation-email-component';
+
+// const ses = new SES({ 
+//     region: process.env.VITE_REACT_APP_AWS_REGION,
+//     credentials: {
+//         accessKeyId: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY_ID,
+//         secretAccessKey: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY,
+//     }
+// });
+
+// const UpdatedPaymentForm = () => {
+//     const {cartTotal} = useContext(ShoppingCartContext);
+
+//     const [clientSecret, setClientSecret] = useState("");
+//     const [isProcessing, setIsProcessing] = useState(false);
+//     const [emailInput, setEmailInput] = useState("");
+//     const stripe = useStripe();
+//     const elements = useElements();
+//     const total = cartTotal * 100;
+    
+//     //create payment intent with cartTotal amount to Netlify server
+//     //send this request to Netlify serverless function
+//     useEffect(() => {
+//         const getStripePaymentIntent = async () => {
+//             const response = await fetch('/.netlify/functions/create-payment-intent', {
+//                 method: 'post',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify({
+//                     amount: total,
+//                 })
+//             });
+
+//             console.log(response);
+//             const data = await response.json();
+    
+//             console.log(data); // returns paymentIntent object
+    
+//             const {paymentIntent: {client_secret}} = data;
+//             console.log(client_secret);
+//             setClientSecret(client_secret);
+//         };
+//         getStripePaymentIntent();
+//     },[])
+
+//     // confirm the payment on the client
+//     const handlePayment = async (event: FormEvent) => {
+//         event.preventDefault();
+    
+//         if(!stripe || !elements) return;
+
+//         setIsProcessing(true);
+
+//         const {error: submitError} = await elements.submit();
+//         if(submitError){
+//             console.log(submitError);
+//             setIsProcessing(false);
+//             return;
 //         }
-//     })
-// })
 
-// setIsProcessing(false);
-// console.log(paymentResult);
+//         try {
+//             const paymentResult = await stripe.confirmPayment({
+//                 elements,
+//                 clientSecret,
+//                 confirmParams: {
+//                     return_url: "https://sandra-sanchez-art.netlify.app",
+//                     payment_method_data: {
+//                         billing_details: {
+//                             email: emailInput,
+//                         }
+//                     }
+//                 }
+//             });
 
+//             if(paymentResult.error){
+//                 console.log(paymentResult.error);
+//                 alert(`There was an error submitting payment: ${paymentResult.error}`);
+//                 setIsProcessing(false);
+//                 return;
+//             }
+
+//             const emailHtml = render(<ConfirmationEmail/>);
+//             const params = {
+//             Source: 'email@sandrasanchezart.space',
+//             Destination: {
+//                 ToAddresses: [`${emailInput}`],
+//             },
+//             Message: {
+//                 Body: {
+//                     Html: {
+//                         Charset: 'UTF-8',
+//                         Data: emailHtml,
+//                     },
+//                 },
+//                 Subject: {
+//                     Charset: 'UTF-8',
+//                     Data: 'Payment Confirmation',
+//                 },
+//             },
+//         };
+
+//         await ses.sendEmail(params);
+
+//         } catch (error) {
+//             console.error('Error processing payment or sending email:', error);
+//             setIsProcessing(false);
+//         }
+//     }
+
+//     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+//         const newInputValue = event.target.value;
+//         setEmailInput(newInputValue);
+
+//         console.log(emailInput);
+//     };
