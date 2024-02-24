@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// netlify/functions/send-email-using-resend.tsx
+// netlify/functions/send-email-using-resend.js
 var send_email_using_resend_exports = {};
 __export(send_email_using_resend_exports, {
   handler: () => handler
@@ -33,17 +33,16 @@ var handler = async (event) => {
         "Authorization": `Bearer ${RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: "sandrasanchezart.space",
+        from: "email@sandrasanchezart.space",
         to: "bennnnnnnvu@gmail.com",
         subject: "hello",
-        html: "<strong>it works!</strong"
+        html: "<strong>payment successful!</strong>"
       })
     });
     if (response.ok) {
-      const data = await response.json();
       return {
         statusCode: 200,
-        body: data
+        body: JSON.stringify(`Successfully sent email!`)
       };
     }
   } catch (error) {

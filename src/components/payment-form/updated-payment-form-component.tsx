@@ -22,27 +22,28 @@ const UpdatedPaymentForm = () => {
     //create payment intent with cartTotal amount to Netlify server
     //send this request to Netlify serverless function
     useEffect(() => {
-        const response = fetch('/.netlify/functions/create-payment-intent', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                amount: total,
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
+        const getStripePaymentIntent = async () => {
+            const response = await fetch('/.netlify/functions/create-payment-intent', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    amount: total,
+                })
+            });
+
+            console.log(response);
+            const data = await response.json();
+    
             console.log(data); // returns paymentIntent object
+    
             const {paymentIntent: {client_secret}} = data;
             console.log(client_secret);
             setClientSecret(client_secret);
-        })
-        
-        console.log(response);
-        console.log(clientSecret);
-        
-    },[]);
+        };
+        getStripePaymentIntent();
+    },[])
 
     // confirm the payment on the client
     const handlePayment = async (event: FormEvent) => {
