@@ -9,6 +9,8 @@ export default defineConfig({
     'process.env.VITE_REACT_APP_AWS_REGION': JSON.stringify(process.env.VITE_REACT_APP_AWS_REGION),
     'process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY_ID': JSON.stringify(process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY_ID),
     'process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY': JSON.stringify(process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY),
+    'process.env.VITE_REACT_APP_AWS_SMTP_USERNAME': JSON.stringify(process.env.VITE_REACT_APP_AWS_SMTP_USERNAME),
+    'process.env.VITE_REACT_APP_AWS_SMTP_PASSWORD': JSON.stringify(process.env.VITE_REACT_APP_AWS_SMTP_PASSWORD)
   }
   // build: {
   //   outDir: 'build',

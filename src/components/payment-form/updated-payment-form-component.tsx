@@ -17,8 +17,8 @@ const UpdatedPaymentForm = () => {
     const ses = new SES({ 
         region: process.env.VITE_REACT_APP_AWS_REGION,
         credentials: {
-            accessKeyId: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY_ID,
-            secretAccessKey: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY,
+            accessKeyId: process.env.VITE_REACT_APP_AWS_SMTP_USERNAME,
+            secretAccessKey: process.env.VITE_REACT_APP_AWS_SMTP_PASSWORD,
         }
     });
 
@@ -97,7 +97,7 @@ const UpdatedPaymentForm = () => {
 
             const emailHtml = render(<ConfirmationEmail/>);
             const params = {
-            Source: 'email@sandrasanchezart.space',
+            Source: 'sandrasanchezart.space',
             Destination: {
                 ToAddresses: [`${emailInput}`],
             },
