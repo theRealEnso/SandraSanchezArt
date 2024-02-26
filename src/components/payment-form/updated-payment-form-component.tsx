@@ -89,12 +89,13 @@ const UpdatedPaymentForm = () => {
 
             console.log(paymentResult);
 
-            //trying to send email using resend + Netlify serverless function
-            const sendEmailUsingResend = async () => {
+            //trying to send email using AWS Lambda function endpoint on AWS
+
+            const sendEmailUsingAWSLambdaEndpoint = async () => {
                 const RESEND_API_KEY = process.env.VITE_REACT_APP_RESEND_API_KEY;
         
                 try {  
-                    const response = await fetch('./netlify/functions/send-email-using-resend', {
+                    const response = await fetch('https://hwtzbk1gug.execute-api.us-east-2.amazonaws.com/default/resend-emails', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -104,7 +105,7 @@ const UpdatedPaymentForm = () => {
                             from: 'email@sandrasanchezart.space',
                             to: [emailInput],
                             subject: 'Order confirmation for SandraSanchezArt',
-                            html: <strong>payment successful!</strong>
+                            html: <strong>payment was successful!</strong>
                         })
                     })
         
@@ -123,8 +124,46 @@ const UpdatedPaymentForm = () => {
                     }
                 }
         
-                sendEmailUsingResend();
-            }
+                sendEmailUsingAWSLambdaEndpoint();
+            };
+
+            //trying to send email using resend + Netlify serverless function. Only works locally so with Postman so far, but gets a status `502 Bad gateway` when sending to netlify
+            // const sendEmailUsingResend = async () => {
+            //     const RESEND_API_KEY = process.env.VITE_REACT_APP_RESEND_API_KEY;
+        
+            //     try {  
+            //         const response = await fetch('./netlify/functions/send-email-using-resend', {
+            //             method: 'POST',
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //                 'Authorization': `Bearer ${RESEND_API_KEY}`,
+            //             },
+            //             body: JSON.stringify({
+            //                 from: 'email@sandrasanchezart.space',
+            //                 to: [emailInput],
+            //                 subject: 'Order confirmation for SandraSanchezArt',
+            //                 html: <strong>payment successful!</strong>
+            //             })
+            //         })
+        
+            //         if(response.ok){
+            //             return {
+            //                 statusCode: 200,
+            //                 body: JSON.stringify('payment successful!')
+            //             }
+            //         }
+            //     } catch (error) {
+            //         console.log(error);
+        
+            //         return {
+            //             statusCode: 400,
+            //             body: JSON.stringify(`Error processing payment: ${error}`)
+            //         }
+            //     }
+        
+            //     sendEmailUsingResend();
+            // };
+
         
             
             //trying to use resend package (but example code using Next.js ) ?
@@ -138,7 +177,7 @@ const UpdatedPaymentForm = () => {
             //   });
             // 
             // 
-            
+
             //trying to use aws sdk + render from react-email package
             // const ses = new SES({ 
             //     region: process.env.VITE_REACT_APP_AWS_REGION,
