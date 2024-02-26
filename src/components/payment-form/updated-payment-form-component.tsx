@@ -97,7 +97,7 @@ const UpdatedPaymentForm = () => {
                 const RESEND_API_KEY = process.env.VITE_REACT_APP_RESEND_API_KEY;
         
                 try {  
-                    const response = await fetch('https://hwtzbk1gug.execute-api.us-east-2.amazonaws.com/default/resend-emails', {
+                    const response = await fetch('https://ohr7ioxktszdrig7di5h5puieq0kdemb.lambda-url.us-east-2.on.aws/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
