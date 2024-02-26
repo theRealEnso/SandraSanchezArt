@@ -1,8 +1,8 @@
 import { useEffect, useState, useContext, FormEvent, ChangeEvent } from "react";
 import { useStripe, useElements, PaymentElement, AddressElement} from "@stripe/react-stripe-js";
 
-import {render} from '@react-email/render';
-import {SES} from '@aws-sdk/client-ses';
+// import {render} from '@react-email/render';
+// import {SES} from '@aws-sdk/client-ses';
 
 // import {Resend} from 'resend';
 
@@ -12,7 +12,7 @@ import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
 
 import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 
-import ConfirmationEmail from "../../emails/confirmation-email-component";
+// import ConfirmationEmail from "../../emails/confirmation-email-component";
 
 const UpdatedPaymentForm = () => {
 
@@ -68,33 +68,6 @@ const UpdatedPaymentForm = () => {
             return;
         }
 
-        //trying to send email using AWS Lambda function endpoint on AWS via API gateway
-
-        const sendEmailUsingAWSLambdaEndpoint = async () => {
-            const RESEND_API_KEY = process.env.VITE_REACT_APP_RESEND_API_KEY;
-    
-            try {  
-                const response = await fetch('https://hwtzbk1gug.execute-api.us-east-2.amazonaws.com/default/resend-emails', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${RESEND_API_KEY}`,
-                    },
-                    body: JSON.stringify({
-                        from: 'email@sandrasanchezart.space',
-                        to: [emailInput],
-                        subject: 'Order confirmation for SandraSanchezArt',
-                        html: '<strong>payment was successful!</strong>',
-                    })
-                })
-
-                console.log(response);
-    
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
         try {
             const paymentResult = await stripe.confirmPayment({
                 elements,
@@ -117,6 +90,33 @@ const UpdatedPaymentForm = () => {
             }
 
             console.log(paymentResult);
+
+            //trying to send email using AWS Lambda function endpoint on AWS via API gateway
+
+            const sendEmailUsingAWSLambdaEndpoint = async () => {
+                const RESEND_API_KEY = process.env.VITE_REACT_APP_RESEND_API_KEY;
+        
+                try {  
+                    const response = await fetch('https://hwtzbk1gug.execute-api.us-east-2.amazonaws.com/default/resend-emails', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${RESEND_API_KEY}`,
+                        },
+                        body: JSON.stringify({
+                            from: 'email@sandrasanchezart.space',
+                            to: [emailInput],
+                            subject: 'Order confirmation for SandraSanchezArt',
+                            html: '<strong>payment was successful!</strong>',
+                        })
+                    })
+
+                    console.log(response);
+        
+                } catch (error) {
+                    console.log(error);
+                }
+            };
 
             await sendEmailUsingAWSLambdaEndpoint();
 
@@ -211,9 +211,11 @@ const UpdatedPaymentForm = () => {
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const newInputValue = event.target.value;
         setEmailInput(newInputValue);
-
-        console.log(emailInput);
     };
+
+    useEffect(() => {
+        console.log(emailInput);
+    }, [emailInput]);
 
     return (
         <PaymentFormContainer>
