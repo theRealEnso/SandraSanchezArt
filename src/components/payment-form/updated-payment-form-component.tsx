@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext, FormEvent, ChangeEvent } from "react";
 import { useStripe, useElements, PaymentElement, AddressElement} from "@stripe/react-stripe-js";
-import { useNavigate } from "react-router-dom";
 
 import {render} from '@react-email/render';
 import {SES} from '@aws-sdk/client-ses';
@@ -25,8 +24,6 @@ const UpdatedPaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const total = cartTotal * 100;
-
-    const navigate = useNavigate();
     
     //create payment intent with cartTotal amount to Netlify server
     //send this request to Netlify serverless function
@@ -76,7 +73,7 @@ const UpdatedPaymentForm = () => {
                 elements,
                 clientSecret,
                 confirmParams: {
-                    return_url: "https://sandra-sanchez-art.netlify.app",
+                    return_url: "https://sandra-sanchez-art.netlify.app/order-confirmation",
                     payment_method_data: {
                         billing_details: {
                             email: emailInput,
@@ -93,8 +90,6 @@ const UpdatedPaymentForm = () => {
             }
 
             console.log(paymentResult);
-
-            navigate('/order-confirmation');
 
             //trying to send email using AWS Lambda function endpoint on AWS via API gateway
 
