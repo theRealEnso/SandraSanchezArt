@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext, FormEvent, ChangeEvent } from "react";
 import { useStripe, useElements, PaymentElement, AddressElement} from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
 
 import {render} from '@react-email/render';
 import {SES} from '@aws-sdk/client-ses';
@@ -24,6 +25,8 @@ const UpdatedPaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const total = cartTotal * 100;
+
+    const navigate = useNavigate();
     
     //create payment intent with cartTotal amount to Netlify server
     //send this request to Netlify serverless function
@@ -48,7 +51,9 @@ const UpdatedPaymentForm = () => {
             console.log(client_secret);
             setClientSecret(client_secret);
         };
+
         getStripePaymentIntent();
+
     },[])
 
     // confirm the payment on the client
@@ -89,7 +94,9 @@ const UpdatedPaymentForm = () => {
 
             console.log(paymentResult);
 
-            //trying to send email using AWS Lambda function endpoint on AWS
+            navigate('/order-confirmation');
+
+            //trying to send email using AWS Lambda function endpoint on AWS via API gateway
 
             const sendEmailUsingAWSLambdaEndpoint = async () => {
                 const RESEND_API_KEY = process.env.VITE_REACT_APP_RESEND_API_KEY;
@@ -108,20 +115,11 @@ const UpdatedPaymentForm = () => {
                             html: <strong>payment was successful!</strong>
                         })
                     })
+
+                    console.log(response);
         
-                    if(response.ok){
-                        return {
-                            statusCode: 200,
-                            body: JSON.stringify('payment successful!')
-                        }
-                    }
                 } catch (error) {
                     console.log(error);
-        
-                    return {
-                        statusCode: 400,
-                        body: JSON.stringify(`Error processing payment: ${error}`)
-                    }
                 }
         
                 sendEmailUsingAWSLambdaEndpoint();
@@ -178,7 +176,7 @@ const UpdatedPaymentForm = () => {
             // 
             // 
 
-            //trying to use aws sdk + render from react-email package
+            //trying to use aws sdk SMTP + render from react-email package
             // const ses = new SES({ 
             //     region: process.env.VITE_REACT_APP_AWS_REGION,
             //     credentials: {

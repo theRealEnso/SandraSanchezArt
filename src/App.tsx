@@ -15,6 +15,7 @@ import Category from './components/category/category-component';
 import ProductDetails from './routes/Product-details/product-details-component';
 import CartSummary from './routes/Cart-Summary/cart-summary-component';
 import Checkout from './routes/Checkout/checkout-component';
+import OrderConfirmation from './routes/Order-confirmation/order-confirmation-component';
 
 import { getCategoriesAndDocuments } from './utilities/firebase-utilities';
 
@@ -54,6 +55,7 @@ const App: FC = () => {
         <Route path='authentication' element={<Authentication></Authentication>}></Route>
         <Route path='cart-summary' element={<CartSummary></CartSummary>}></Route>
         <Route path='checkout' element={<Checkout></Checkout>}></Route>
+        <Route path='order-confirmation' element={<OrderConfirmation></OrderConfirmation>}></Route>
       </Route>
   </Routes>
   );
