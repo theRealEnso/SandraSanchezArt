@@ -1,6 +1,11 @@
+import {render} from '@react-email/render';
+
+import {SES} from '@aws-sdk/client-ses';
 import aws from 'aws-sdk';
 
-const ses = new aws.SES({ 
+import ConfirmationEmail from '../../src/emails/confirmation-email-component';
+
+const ses = new SES({ 
     region: process.env.VITE_REACT_APP_AWS_REGION,
     accessKeyId: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY_ID,
     secretAccessKey: process.env.VITE_REACT_APP_AWS_SECRET_ACCESS_KEY,
@@ -19,7 +24,7 @@ export const handler = async (event) => {
             },
             Subject: { Data: subject }
         },
-        Source: 'bennnnnnnvu@gmail.com', // Make sure this is verified in your SES console
+        Source: 'bennnnnnnvu@gmail.com', 
     };
 
     try {

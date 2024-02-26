@@ -4,6 +4,8 @@ import { useStripe, useElements, PaymentElement, AddressElement} from "@stripe/r
 import {render} from '@react-email/render';
 import {SES} from '@aws-sdk/client-ses';
 
+// import {Resend} from 'resend';
+
 import { PaymentFormContainer, FormContainer, AddressElementContainer, PaymentElementContainer, PaymentButton, EmailContainer } from "./updated-payment-form-styles";
 import { UpdatedCheckoutInput } from "./updated-payment-form-styles";
 import { BUTTON_STYLE_CLASSES } from "../Button/button-style-classes";
@@ -13,14 +15,6 @@ import { ShoppingCartContext } from "../../contexts/shopping-cart-context";
 import ConfirmationEmail from "../../emails/confirmation-email-component";
 
 const UpdatedPaymentForm = () => {
-
-    const ses = new SES({ 
-        region: process.env.VITE_REACT_APP_AWS_REGION,
-        credentials: {
-            accessKeyId: process.env.VITE_REACT_APP_AWS_SMTP_USERNAME,
-            secretAccessKey: process.env.VITE_REACT_APP_AWS_SMTP_PASSWORD,
-        }
-    });
 
     const {cartTotal} = useContext(ShoppingCartContext);
 
@@ -95,27 +89,86 @@ const UpdatedPaymentForm = () => {
 
             console.log(paymentResult);
 
-            const emailHtml = render(<ConfirmationEmail/>);
-            const params = {
-            Source: 'sandrasanchezart.space',
-            Destination: {
-                ToAddresses: [`${emailInput}`],
-            },
-            Message: {
-                Body: {
-                    Html: {
-                        Charset: 'UTF-8',
-                        Data: emailHtml,
-                    },
-                },
-                Subject: {
-                    Charset: 'UTF-8',
-                    Data: 'Payment Confirmation',
-                },
-            },
-        };
+            //trying to send email using resend + Netlify serverless function
+            const sendEmailUsingResend = async () => {
+                const RESEND_API_KEY = process.env.VITE_REACT_APP_RESEND_API_KEY;
+        
+                try {  
+                    const response = await fetch('./netlify/functions/send-email-using-resend', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${RESEND_API_KEY}`,
+                        },
+                        body: JSON.stringify({
+                            from: 'email@sandrasanchezart.space',
+                            to: [emailInput],
+                            subject: 'Order confirmation for SandraSanchezArt',
+                            html: <strong>payment successful!</strong>
+                        })
+                    })
+        
+                    if(response.ok){
+                        return {
+                            statusCode: 200,
+                            body: JSON.stringify('payment successful!')
+                        }
+                    }
+                } catch (error) {
+                    console.log(error);
+        
+                    return {
+                        statusCode: 400,
+                        body: JSON.stringify(`Error processing payment: ${error}`)
+                    }
+                }
+        
+                sendEmailUsingResend();
+            }
+        
+            
+            //trying to use resend package (but example code using Next.js ) ?
+            // const resend = new Resend(process.env.VITE_REACT_APP_RESEND_API_KEY);
 
-        await ses.sendEmail(params);
+            // await resend.emails.send({
+            //     from: 'email@sandrasanchezart.space',
+            //     to: 'bennnnnnnvu@gmail.com',
+            //     subject: 'SandraSanchezArt order confirmation',
+            //     react: <ConfirmationEmail/>,
+            //   });
+            // 
+            // 
+            
+            //trying to use aws sdk + render from react-email package
+            // const ses = new SES({ 
+            //     region: process.env.VITE_REACT_APP_AWS_REGION,
+            //     credentials: {
+            //         accessKeyId: process.env.VITE_REACT_APP_AWS_SMTP_USERNAME,
+            //         secretAccessKey: process.env.VITE_REACT_APP_AWS_SMTP_PASSWORD,
+            //     }
+            // });
+
+            // const emailHtml = render(<ConfirmationEmail/>);
+            // const params = {
+            //     Source: 'sandrasanchezart.space',
+            //     Destination: {
+            //         ToAddresses: [emailInput],
+            //     },
+            //     Message: {
+            //         Body: {
+            //             Html: {
+            //                 Charset: 'UTF-8',
+            //                 Data: emailHtml,
+            //             },
+            //         },
+            //         Subject: {
+            //             Charset: 'UTF-8',
+            //             Data: 'Payment Confirmation',
+            //         },
+            //     },
+            // };
+
+            // await ses.sendEmail(params);
             
         } catch (error) {
             console.error('Error processing payment or sending email:', error);
